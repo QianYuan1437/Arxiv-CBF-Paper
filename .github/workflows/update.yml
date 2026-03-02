@@ -10,8 +10,15 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   update:
+    # 跳过 bot 自身触发的 push，只响应真实用户提交
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,10 +31,10 @@ jobs:
 
       - run: python fetch_papers.py
 
-      - name: Commit and push
+      - name: Commit and push docs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md papers_data.json
+          git add docs/
           git diff --cached --quiet || git commit -m "chore: update CBF papers $(date -u +'%Y-%m-%d %H:%M UTC')"
           git push
