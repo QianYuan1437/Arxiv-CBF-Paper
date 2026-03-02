@@ -1,5 +1,80 @@
 {
-  "high_citation": [],
+  "high_citation": [
+    {
+      "title": "Dynamic Control Barrier Function-based Model Predictive Control to Safety-Critical Obstacle-Avoidance of Mobile Robot",
+      "authors": [
+        "Zhu Jian",
+        "Zihong Yan",
+        "Xuanang Lei",
+        "Zih-Rong Lu",
+        "Bin Lan",
+        "Xueqian Wang",
+        "Bin Liang"
+      ],
+      "year": 2022,
+      "date": "2022-09-18",
+      "citations": 133,
+      "arxiv_id": "2209.08539",
+      "url": "https://arxiv.org/abs/2209.08539",
+      "abstract": "This paper presents an efficient and safe method to avoid static and dynamic obstacles based on LiDAR. First, point cloud is used to generate a real-time local grid map for obstacle detection. Then, obstacles are clustered by DBSCAN algorithm and enclosed with minimum bounding ellipses (MBEs). In ad"
+    },
+    {
+      "title": "Guaranteed Obstacle Avoidance for Multi-Robot Operations With Limited Actuation: A Control Barrier Function Approach",
+      "authors": [
+        "Yuxiao Chen",
+        "Andrew W. Singletary",
+        "A. Ames"
+      ],
+      "year": 2021,
+      "date": "2021-01-01",
+      "citations": 167,
+      "arxiv_id": null,
+      "url": "",
+      "abstract": "This letter considers the problem of obstacle avoidance for multiple robotic agents moving in an environment with obstacles. A decentralized supervisory controller is synthesized based on control barrier functions (CBF) that guarantees obstacle avoidance with limited actuation capability. The propos"
+    },
+    {
+      "title": "Safe reinforcement learning: A control barrier function optimization approach",
+      "authors": [
+        "Z. Marvi",
+        "Bahare Kiumarsi"
+      ],
+      "year": 2020,
+      "date": "2020-08-11",
+      "citations": 217,
+      "arxiv_id": null,
+      "url": "",
+      "abstract": "This article presents a learning‐based barrier certified method to learn safe optimal controllers that guarantee operation of safety‐critical systems within their safe regions while providing an optimal performance. The cost function that encodes the designer's objectives is augmented with a control"
+    },
+    {
+      "title": "Control Barrier Function Based Quadratic Programs for Safety Critical Systems",
+      "authors": [
+        "A. Ames",
+        "Xiangru Xu",
+        "J. Grizzle",
+        "P. Tabuada"
+      ],
+      "year": 2016,
+      "date": "2016-09-21",
+      "citations": 2281,
+      "arxiv_id": "1609.06408",
+      "url": "https://arxiv.org/abs/1609.06408",
+      "abstract": "Safety critical systems involve the tight coupling between potentially conflicting control objectives and safety constraints. As a means of creating a formal framework for controlling systems of this form, and with a view toward automotive applications, this paper develops a methodology that allows "
+    },
+    {
+      "title": "Control barrier function based quadratic programs with application to adaptive cruise control",
+      "authors": [
+        "A. Ames",
+        "J. Grizzle",
+        "P. Tabuada"
+      ],
+      "year": 2014,
+      "date": "2014-12-01",
+      "citations": 991,
+      "arxiv_id": null,
+      "url": "",
+      "abstract": ""
+    }
+  ],
   "latest": [
     {
       "title": "SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision",

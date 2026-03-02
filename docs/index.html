@@ -26,18 +26,58 @@
   .authors{font-size:.85rem;color:#666;margin-bottom:.5rem}
   .abstract{font-size:.85rem;color:#555;line-height:1.6;border-top:1px solid #f0f0f0;padding-top:.5rem;margin-top:.5rem}
   footer{text-align:center;padding:2rem;color:#999;font-size:.85rem}
+  .author-layout{display:flex;max-width:1100px;margin:2rem auto;padding:0 1rem;gap:1.5rem}
+  .author-list{width:260px;flex-shrink:0;background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;align-self:flex-start;position:sticky;top:80px;max-height:80vh;overflow-y:auto}
+  .author-list ul{list-style:none}
+  .author-item{display:flex;justify-content:space-between;align-items:center;padding:.7rem 1rem;cursor:pointer;border-bottom:1px solid #f0f0f0;transition:background .15s}
+  .author-item:hover,.author-item.active{background:#e8eaf6}
+  .author-name{font-size:.9rem;font-weight:500}
+  .author-count{font-size:.75rem;background:#1a1a2e;color:white;border-radius:1rem;padding:.1rem .5rem}
+  .author-panels{flex:1;min-width:0}
+  .author-panel{display:none}
+  .author-panel.active{display:block}
 </style>
 </head>
 <body>
 <header>
   <h1>📄 CBF Papers Tracker</h1>
-  <p>Control Barrier Function papers on arXiv &nbsp;|&nbsp; Updated: 2026-03-02 02:15 UTC</p>
+  <p>Control Barrier Function papers on arXiv &nbsp;|&nbsp; Updated: 2026-03-02 03:04 UTC</p>
 </header>
 <div class="tabs">
-  <button class="tab active" onclick="show('high')">📊 High Citation (≥100)</button>
-  <button class="tab" onclick="show('latest')">🆕 Latest Papers</button>
+  <button class="tab active" onclick="show('high',this)">📊 High Citation (≥100)</button>
+  <button class="tab" onclick="show('latest',this)">🆕 Latest Papers</button>
+  <button class="tab" onclick="show('authors',this)">👤 主要作者</button>
 </div>
-<div id="high" class="section active"></div>
+<div id="high" class="section active">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 133 citations</span><a href="https://arxiv.org/abs/2209.08539" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Dynamic Control Barrier Function-based Model Predictive Control to Safety-Critical Obstacle-Avoidance of Mobile Robot</h3>
+      <p class="authors">Zhu Jian, Zihong Yan, Xuanang Lei, Zih-Rong Lu, Bin Lan et al.</p>
+      <p class="abstract">This paper presents an efficient and safe method to avoid static and dynamic obstacles based on LiDAR. First, point cloud is used to generate a real-time local grid map for obstacle detection. Then, obstacles are clustered by DBSCAN algorithm and enclosed with minimum bounding ellipses (MBEs). In ad...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge">🔥 167 citations</span></div>
+      <h3>Guaranteed Obstacle Avoidance for Multi-Robot Operations With Limited Actuation: A Control Barrier Function Approach</h3>
+      <p class="authors">Yuxiao Chen, Andrew W. Singletary, A. Ames</p>
+      <p class="abstract">This letter considers the problem of obstacle avoidance for multiple robotic agents moving in an environment with obstacles. A decentralized supervisory controller is synthesized based on control barrier functions (CBF) that guarantees obstacle avoidance with limited actuation capability. The propos...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge">🔥 217 citations</span></div>
+      <h3>Safe reinforcement learning: A control barrier function optimization approach</h3>
+      <p class="authors">Z. Marvi, Bahare Kiumarsi</p>
+      <p class="abstract">This article presents a learning‐based barrier certified method to learn safe optimal controllers that guarantee operation of safety‐critical systems within their safe regions while providing an optimal performance. The cost function that encodes the designer's objectives is augmented with a control...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge">🔥 2281 citations</span><a href="https://arxiv.org/abs/1609.06408" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Control Barrier Function Based Quadratic Programs for Safety Critical Systems</h3>
+      <p class="authors">A. Ames, Xiangru Xu, J. Grizzle, P. Tabuada</p>
+      <p class="abstract">Safety critical systems involve the tight coupling between potentially conflicting control objectives and safety constraints. As a means of creating a formal framework for controlling systems of this form, and with a view toward automotive applications, this paper develops a methodology that allows ...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge">🔥 991 citations</span></div>
+      <h3>Control barrier function based quadratic programs with application to adaptive cruise control</h3>
+      <p class="authors">A. Ames, J. Grizzle, P. Tabuada</p>
+      
+    </div></div>
 <div id="latest" class="section">    <div class="card">
       <div class="card-header"><span class="badge date">2026-02-27</span><a href="https://arxiv.org/abs/2602.23719v1" target="_blank" class="arxiv-link">arXiv →</a></div>
       <h3>SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision</h3>
@@ -338,14 +378,1383 @@
       <p class="authors">Adrian Wiltz, Dimos V. Dimarogonas</p>
       <p class="abstract">This article presents a systematic method for designing time-varying Control Barrier Functions (CBF) composed of a time-invariant component and multiple time-dependent components, leveraging structural properties of the system dynamics. The method involves the construction of a specific class of tim...</p>
     </div></div>
+<div id="authors" class="section">
+  <div class="author-layout">
+    <div class="author-list"><ul><li class="author-item" onclick="showAuthor(0)"><span class="author-name">A. Ames</span><span class="author-count">3</span></li>
+<li class="author-item" onclick="showAuthor(1)"><span class="author-name">Wei Xiao</span><span class="author-count">3</span></li>
+<li class="author-item" onclick="showAuthor(2)"><span class="author-name">J. Grizzle</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(3)"><span class="author-name">P. Tabuada</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(4)"><span class="author-name">Zihao Li</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(5)"><span class="author-name">Sylvia Herbert</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(6)"><span class="author-name">Anni Li</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(7)"><span class="author-name">Pol Mestres</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(8)"><span class="author-name">Roberto Armellin</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(9)"><span class="author-name">Ji Wang</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(10)"><span class="author-name">Philip E. Paré</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(11)"><span class="author-name">Shima Sadat Mousavi</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(12)"><span class="author-name">Aaron D. Ames</span><span class="author-count">2</span></li>
+<li class="author-item" onclick="showAuthor(13)"><span class="author-name">Zhu Jian</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(14)"><span class="author-name">Zihong Yan</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(15)"><span class="author-name">Xuanang Lei</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(16)"><span class="author-name">Zih-Rong Lu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(17)"><span class="author-name">Bin Lan</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(18)"><span class="author-name">Xueqian Wang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(19)"><span class="author-name">Bin Liang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(20)"><span class="author-name">Yuxiao Chen</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(21)"><span class="author-name">Andrew W. Singletary</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(22)"><span class="author-name">Z. Marvi</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(23)"><span class="author-name">Bahare Kiumarsi</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(24)"><span class="author-name">Xiangru Xu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(25)"><span class="author-name">Wenzhe Zhao</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(26)"><span class="author-name">Yang Zhao</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(27)"><span class="author-name">Ganchao Liu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(28)"><span class="author-name">Zhiyu Jiang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(29)"><span class="author-name">Dandan Ma</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(30)"><span class="author-name">Xuelong Li</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(31)"><span class="author-name">Sander Tonkens</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(32)"><span class="author-name">Sosuke Kojima</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(33)"><span class="author-name">Chenhao Liu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(34)"><span class="author-name">Judy Masri</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(35)"><span class="author-name">Darshan Gadginmath</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(36)"><span class="author-name">Ahmed Allibhoy</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(37)"><span class="author-name">Fabio Pasqualetti</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(38)"><span class="author-name">Thanh Q. Tran</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(39)"><span class="author-name">Arun Verma</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(40)"><span class="author-name">Kiwan Wong</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(41)"><span class="author-name">Bryan Kian Hsiang Low</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(42)"><span class="author-name">Daniela Rus</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(43)"><span class="author-name">Christos Cassandras</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(44)"><span class="author-name">Zachary Ravichandran</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(45)"><span class="author-name">David Snyder</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(46)"><span class="author-name">Alexander Robey</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(47)"><span class="author-name">Hamed Hassani</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(48)"><span class="author-name">Vijay Kumar</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(49)"><span class="author-name">George J. Pappas</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(50)"><span class="author-name">Jie Song</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(51)"><span class="author-name">Yang Bai</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(52)"><span class="author-name">Naoki Wakamiya</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(53)"><span class="author-name">Zhengyan Chu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(54)"><span class="author-name">Zihan Zhang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(55)"><span class="author-name">Haohui Que</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(56)"><span class="author-name">Junhan Chang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(57)"><span class="author-name">Xin Zhang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(58)"><span class="author-name">Hao Wei</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(59)"><span class="author-name">Tong Zhu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(60)"><span class="author-name">Johannes Mootz</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(61)"><span class="author-name">Reza Akhavian</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(62)"><span class="author-name">Haocheng Zhao</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(63)"><span class="author-name">Lukas Brunke</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(64)"><span class="author-name">Oliver Lagerquist</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(65)"><span class="author-name">Siqi Zhou</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(66)"><span class="author-name">Angela P. Schoellig</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(67)"><span class="author-name">Bharathkumar Hegde</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(68)"><span class="author-name">Melanie Bouroche</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(69)"><span class="author-name">Giannis Delimpaltadakis</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(70)"><span class="author-name">Jorge Cortés</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(71)"><span class="author-name">W. P. M. H. Heemels</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(72)"><span class="author-name">Jiawei Xu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(73)"><span class="author-name">Subhrajit Bhattacharya</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(74)"><span class="author-name">David Saldaña</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(75)"><span class="author-name">Zihao Xu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(76)"><span class="author-name">Runyu Lei</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(77)"><span class="author-name">Boxi Lin</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(78)"><span class="author-name">Ce Hao</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(79)"><span class="author-name">Jin Song Dong</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(80)"><span class="author-name">Minduli C. Wijayatunga</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(81)"><span class="author-name">Richard Linares</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(82)"><span class="author-name">Xuting Gao</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(83)"><span class="author-name">Guillem Pascual</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(84)"><span class="author-name">Scott Brown</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(85)"><span class="author-name">Sonia Martínez</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(86)"><span class="author-name">Yun Jiang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(87)"><span class="author-name">Axel Stafström</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(88)"><span class="author-name">Daniel Arnström</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(89)"><span class="author-name">Adam Miksits</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(90)"><span class="author-name">David Umsonst</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(91)"><span class="author-name">Nikolaos Bousias</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(92)"><span class="author-name">George Pappas</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(93)"><span class="author-name">Saba Samadi</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(94)"><span class="author-name">Brooks A. Butler</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(95)"><span class="author-name">Nikhil Uday Shinde</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(96)"><span class="author-name">Dylan Hirsch</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(97)"><span class="author-name">Michael C. Yip</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(98)"><span class="author-name">Minduli Wijayatunga</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(99)"><span class="author-name">Nathan Wallace</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(100)"><span class="author-name">Salah Sukkarieh</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(101)"><span class="author-name">Mohammadreza Kamaldar</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(102)"><span class="author-name">Ruoyu Lin</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(103)"><span class="author-name">Magnus Egerstedt</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(104)"><span class="author-name">Jianye Xu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(105)"><span class="author-name">Bassam Alrifaee</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(106)"><span class="author-name">Zhenxu Zhao</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(107)"><span class="author-name">Weiyao Lan</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(108)"><span class="author-name">Chao Wang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(109)"><span class="author-name">Shuyuan Zhang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(110)"><span class="author-name">Lei Wang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(111)"><span class="author-name">Xiao Tan</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(112)"><span class="author-name">Johnathan Corbin</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(113)"><span class="author-name">Sarah H. Q. Li</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(114)"><span class="author-name">Jonathan Rogers</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(115)"><span class="author-name">Devin Hunter</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(116)"><span class="author-name">Chinwendu Enyioha</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(117)"><span class="author-name">Tyler Paine</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(118)"><span class="author-name">Brendan Long</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(119)"><span class="author-name">Jeremy Wenger</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(120)"><span class="author-name">Michael DeFilippo</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(121)"><span class="author-name">James Usevitch</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(122)"><span class="author-name">Michael Benjamin</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(123)"><span class="author-name">Yifan Xue</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(124)"><span class="author-name">Ze Zhang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(125)"><span class="author-name">Knut Åkesson</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(126)"><span class="author-name">Nadia Figueroa</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(127)"><span class="author-name">Hugo Matias</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(128)"><span class="author-name">Daniel Silvestre</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(129)"><span class="author-name">Roya Khalili Amirabadi</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(130)"><span class="author-name">Mohsen Jalaeian Farimani</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(131)"><span class="author-name">Omid Solaymani Fard</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(132)"><span class="author-name">Chi Ho Leung</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(133)"><span class="author-name">Spyridon Syntakas</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(134)"><span class="author-name">Kostas Vlachos</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(135)"><span class="author-name">Yuqi Ping</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(136)"><span class="author-name">Junwei Wu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(137)"><span class="author-name">Bofeng Zheng</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(138)"><span class="author-name">Fan Liu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(139)"><span class="author-name">Tianhao Liang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(140)"><span class="author-name">Tingting Zhang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(141)"><span class="author-name">Lyes Smaili</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(142)"><span class="author-name">Soulaimane Berkane</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(143)"><span class="author-name">Vaishnavi Jagabathula</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(144)"><span class="author-name">Pushpak Jagtap</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(145)"><span class="author-name">Haochong Chen</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(146)"><span class="author-name">Xincheng Cao</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(147)"><span class="author-name">Levent Guvenc</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(148)"><span class="author-name">Bilin Aksun-Guvenc</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(149)"><span class="author-name">Benedictus C. G. Cinun</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(150)"><span class="author-name">Tua A. Tamba</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(151)"><span class="author-name">Immanuel R. Santjoko</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(152)"><span class="author-name">Xiaofeng Wang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(153)"><span class="author-name">Michael A. Gunarso</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(154)"><span class="author-name">Bin Hu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(155)"><span class="author-name">Mumuksh Tayal</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(156)"><span class="author-name">Manan Tayal</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(157)"><span class="author-name">Aditya Singh</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(158)"><span class="author-name">Shishir Kolathaya</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(159)"><span class="author-name">Ravi Prakash</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(160)"><span class="author-name">Sungjun Seo</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(161)"><span class="author-name">Kooktae Lee</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(162)"><span class="author-name">Pio Ong</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(163)"><span class="author-name">Lizhi Yang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(164)"><span class="author-name">Ersin Das</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(165)"><span class="author-name">Joel W. Burdick</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(166)"><span class="author-name">Heng Zhang</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(167)"><span class="author-name">Rui Dai</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(168)"><span class="author-name">Gokhan Solak</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(169)"><span class="author-name">Pokuang Zhou</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(170)"><span class="author-name">Yu She</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(171)"><span class="author-name">Arash Ajoudani</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(172)"><span class="author-name">Pravin G</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(173)"><span class="author-name">Songqiao Hu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(174)"><span class="author-name">Zeyi Liu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(175)"><span class="author-name">Shuang Liu</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(176)"><span class="author-name">Jun Cen</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(177)"><span class="author-name">Zihan Meng</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(178)"><span class="author-name">Xiao He</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(179)"><span class="author-name">Adrian Wiltz</span><span class="author-count">1</span></li>
+<li class="author-item" onclick="showAuthor(180)"><span class="author-name">Dimos V. Dimarogonas</span><span class="author-count">1</span></li></ul></div>
+    <div class="author-panels"><div class="author-panel" id="author-panel-0">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 167 citations</span></div>
+      <h3>Guaranteed Obstacle Avoidance for Multi-Robot Operations With Limited Actuation: A Control Barrier Function Approach</h3>
+      <p class="authors">Yuxiao Chen, Andrew W. Singletary, A. Ames</p>
+      <p class="abstract">This letter considers the problem of obstacle avoidance for multiple robotic agents moving in an environment with obstacles. A decentralized supervisory controller is synthesized based on control barrier functions (CBF) that guarantees obstacle avoidance with limited actuation capability. The propos...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge">🔥 2281 citations</span><a href="https://arxiv.org/abs/1609.06408" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Control Barrier Function Based Quadratic Programs for Safety Critical Systems</h3>
+      <p class="authors">A. Ames, Xiangru Xu, J. Grizzle, P. Tabuada</p>
+      <p class="abstract">Safety critical systems involve the tight coupling between potentially conflicting control objectives and safety constraints. As a means of creating a formal framework for controlling systems of this form, and with a view toward automotive applications, this paper develops a methodology that allows ...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge">🔥 991 citations</span></div>
+      <h3>Control barrier function based quadratic programs with application to adaptive cruise control</h3>
+      <p class="authors">A. Ames, J. Grizzle, P. Tabuada</p>
+      
+    </div></div>
+<div class="author-panel" id="author-panel-1">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.20102v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>BarrierSteer: LLM Safety via Learning Barrier Steering</h3>
+      <p class="authors">Thanh Q. Tran, Arun Verma, Kiwan Wong, Bryan Kian Hsiang Low, Daniela Rus et al.</p>
+      <p class="abstract">Despite the state-of-the-art performance of large language models (LLMs) across diverse tasks, their susceptibility to adversarial attacks and unsafe content generation remains a major obstacle to deployment, particularly in high-stakes settings. Addressing this challenge requires safety mechanisms ...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.20076v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Robust Taylor-Lagrange Control for Safety-Critical Systems</h3>
+      <p class="authors">Wei Xiao, Christos Cassandras, Anni Li</p>
+      <p class="abstract">Solving safety-critical control problem has widely adopted the Control Barrier Function (CBF) method. However, the existence of a CBF is only a sufficient condition for system safety. The recently proposed Taylor-Lagrange Control (TLC) method addresses this limitation, but is vulnerable to the feasi...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-12</span><a href="https://arxiv.org/abs/2512.11999v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Taylor-Lagrange Control for Safety-Critical Systems</h3>
+      <p class="authors">Wei Xiao, Anni Li</p>
+      <p class="abstract">This paper proposes a novel Taylor-Lagrange Control (TLC) method for nonlinear control systems to ensure the safety and stability through Taylor's theorem with Lagrange remainder. To achieve this, we expand a safety or stability function with respect to time along the system dynamics using the Lie d...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-2">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 2281 citations</span><a href="https://arxiv.org/abs/1609.06408" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Control Barrier Function Based Quadratic Programs for Safety Critical Systems</h3>
+      <p class="authors">A. Ames, Xiangru Xu, J. Grizzle, P. Tabuada</p>
+      <p class="abstract">Safety critical systems involve the tight coupling between potentially conflicting control objectives and safety constraints. As a means of creating a formal framework for controlling systems of this form, and with a view toward automotive applications, this paper develops a methodology that allows ...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge">🔥 991 citations</span></div>
+      <h3>Control barrier function based quadratic programs with application to adaptive cruise control</h3>
+      <p class="authors">A. Ames, J. Grizzle, P. Tabuada</p>
+      
+    </div></div>
+<div class="author-panel" id="author-panel-3">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 2281 citations</span><a href="https://arxiv.org/abs/1609.06408" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Control Barrier Function Based Quadratic Programs for Safety Critical Systems</h3>
+      <p class="authors">A. Ames, Xiangru Xu, J. Grizzle, P. Tabuada</p>
+      <p class="abstract">Safety critical systems involve the tight coupling between potentially conflicting control objectives and safety constraints. As a means of creating a formal framework for controlling systems of this form, and with a view toward automotive applications, this paper develops a methodology that allows ...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge">🔥 991 citations</span></div>
+      <h3>Control barrier function based quadratic programs with application to adaptive cruise control</h3>
+      <p class="authors">A. Ames, J. Grizzle, P. Tabuada</p>
+      
+    </div></div>
+<div class="author-panel" id="author-panel-4">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-27</span><a href="https://arxiv.org/abs/2602.23719v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision</h3>
+      <p class="authors">Wenzhe Zhao, Yang Zhao, Ganchao Liu, Zhiyu Jiang, Dandan Ma et al.</p>
+      <p class="abstract">In UAV dynamic decision, complex and variable hazardous factors pose severe challenges to the generalization capability of algorithms. Despite offering semantic understanding and scene generalization, Large Language Models (LLM) lack domain-specific UAV control knowledge and formal safety assurances...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-07</span><a href="https://arxiv.org/abs/2602.07363v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>UEREBot: Learning Safe Quadrupedal Locomotion under Unstructured Environments and High-Speed Dynamic Obstacles</h3>
+      <p class="authors">Zihao Xu, Runyu Lei, Zihao Li, Boxi Lin, Ce Hao et al.</p>
+      <p class="abstract">Quadruped robots are increasingly deployed in unstructured environments. Safe locomotion in these settings requires long-horizon goal progress, passability over uneven terrain and static constraints, and collision avoidance against high-speed dynamic obstacles. A single system cannot fully satisfy a...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-5">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-26</span><a href="https://arxiv.org/abs/2602.23478v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Refining Almost-Safe Value Functions on the Fly</h3>
+      <p class="authors">Sander Tonkens, Sosuke Kojima, Chenhao Liu, Judy Masri, Sylvia Herbert</p>
+      <p class="abstract">Control Barrier Functions (CBFs) are a powerful tool for ensuring robotic safety, but designing or learning valid CBFs for complex systems is a significant challenge. While Hamilton-Jacobi Reachability provides a formal method for synthesizing safe value functions, it scales poorly and is typically ...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-31</span><a href="https://arxiv.org/abs/2602.00868v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Stochastic Explorer: Enabling Safe Goal Driven Exploration in Stochastic Environments and Safe Interaction with Unknown Objects</h3>
+      <p class="authors">Nikhil Uday Shinde, Dylan Hirsch, Michael C. Yip, Sylvia Herbert</p>
+      <p class="abstract">Autonomous robots operating in unstructured, safety-critical environments, from planetary exploration to warehouses and homes, must learn to safely navigate and interact with their surroundings despite limited prior knowledge. Current methods for safe control, such as Hamilton-Jacobi Reachability an...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-6">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.20076v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Robust Taylor-Lagrange Control for Safety-Critical Systems</h3>
+      <p class="authors">Wei Xiao, Christos Cassandras, Anni Li</p>
+      <p class="abstract">Solving safety-critical control problem has widely adopted the Control Barrier Function (CBF) method. However, the existence of a CBF is only a sufficient condition for system safety. The recently proposed Taylor-Lagrange Control (TLC) method addresses this limitation, but is vulnerable to the feasi...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-12</span><a href="https://arxiv.org/abs/2512.11999v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Taylor-Lagrange Control for Safety-Critical Systems</h3>
+      <p class="authors">Wei Xiao, Anni Li</p>
+      <p class="abstract">This paper proposes a novel Taylor-Lagrange Control (TLC) method for nonlinear control systems to ensure the safety and stability through Taylor's theorem with Lagrange remainder. To achieve this, we expand a safety or stability function with respect to time along the system dynamics using the Lie d...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-7">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-10</span><a href="https://arxiv.org/abs/2602.09928v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Feedback Optimization through Control Barrier Functions</h3>
+      <p class="authors">Giannis Delimpaltadakis, Pol Mestres, Jorge Cortés, W. P. M. H. Heemels</p>
+      <p class="abstract">Feedback optimization refers to a class of methods that steer a control system to a steady state that solves an optimization problem. Despite tremendous progress on the topic, an important problem remains open: enforcing state constraints at all times. The difficulty in addressing it lies on mediati...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.10118v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Explicit Control Barrier Function-based Safety Filters and their Resource-Aware Computation</h3>
+      <p class="authors">Pol Mestres, Shima Sadat Mousavi, Pio Ong, Lizhi Yang, Ersin Das et al.</p>
+      <p class="abstract">This paper studies the efficient implementation of safety filters that are designed using control barrier functions (CBFs), which minimally modify a nominal controller to render it safe with respect to a prescribed set of states. Although CBF-based safety filters are often implemented by solving a q...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-8">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-07</span><a href="https://arxiv.org/abs/2602.07335v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Meta-Reinforcement Learning for Robust and Non-greedy Control Barrier Functions in Spacecraft Proximity Operations</h3>
+      <p class="authors">Minduli C. Wijayatunga, Richard Linares, Roberto Armellin</p>
+      <p class="abstract">Autonomous spacecraft inspection and docking missions require controllers that can guarantee safety under thrust constraints and uncertainty. Input-constrained control barrier functions (ICCBFs) provide a framework for safety certification under bounded actuation; however, conventional ICCBF formula...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-30</span><a href="https://arxiv.org/abs/2602.00366v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Learning Safety-Guaranteed, Non-Greedy Control Barrier Functions Using Reinforcement Learning</h3>
+      <p class="authors">Minduli Wijayatunga, Nathan Wallace, Salah Sukkarieh, Roberto Armellin</p>
+      <p class="abstract">Spacecraft rendezvous and proximity operations (RPO) pose safety risks to high-value assets, so formal safety guarantees are critical. Yet conservative safety controllers can reduce mission efficiency. We propose a unified two-stage reinforcement learning (RL) framework that addresses two complement...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-9">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.04656v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Adaptive Control of Parabolic PDE-ODE Cascades</h3>
+      <p class="authors">Yun Jiang, Ji Wang</p>
+      <p class="abstract">In this paper, we propose a safe adaptive boundary control strategy for a class of parabolic partial differential equation-ordinary differential equation (PDE-ODE) cascaded systems with parametric uncertainties in both the PDE and ODE subsystems. The proposed design is built upon an adaptive Control...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-20</span><a href="https://arxiv.org/abs/2601.14089v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Data-Driven Safe Output Regulation of Strict-Feedback Linear Systems with Input Delay</h3>
+      <p class="authors">Zhenxu Zhao, Ji Wang, Weiyao Lan</p>
+      <p class="abstract">This paper develops a data-driven safe control framework for linear systems possessing a known strict-feedback structure, but with most plant parameters, external disturbances, and input delay being unknown. By leveraging Koopman operator theory, we utilize Krylov dynamic mode decomposition (DMD) to...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-10">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-02</span><a href="https://arxiv.org/abs/2602.02452v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Robust Safety-Critical Control of Networked SIR Dynamics</h3>
+      <p class="authors">Saba Samadi, Brooks A. Butler, Philip E. Paré</p>
+      <p class="abstract">We present a robust safety-critical control framework tailored for networked susceptible-infected-recovered (SIR) epidemic dynamics, leveraging control barrier functions (CBFs) and robust control barrier functions to address the challenges of epidemic spread and mitigation. In our networked SIR mode...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-30</span><a href="https://arxiv.org/abs/2512.24493v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Energy-Aware Bayesian Control Barrier Functions for Physics-Informed Gaussian Process Dynamics</h3>
+      <p class="authors">Chi Ho Leung, Philip E. Paré</p>
+      <p class="abstract">We study safe control for dynamical systems whose continuous-time dynamics are learned with Gaussian processes (GPs), focusing on mechanical and port-Hamiltonian systems where safety is naturally expressed via energy constraints. The availability of a GP Hamiltonian posterior naturally raises the qu...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-11">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-19</span><a href="https://arxiv.org/abs/2601.12885v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>From Vertices to Convex Hulls: Certifying Set-Wise Compatibility for CBF Constraints</h3>
+      <p class="authors">Shima Sadat Mousavi, Xiao Tan, Aaron D. Ames</p>
+      <p class="abstract">This paper develops certificates that propagate compatibility of multiple control barrier function (CBF) constraints from sampled vertices to their convex hull. Under mild concavity and affinity assumptions, we present three sufficient feasibility conditions under which feasible inputs over the conv...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.10118v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Explicit Control Barrier Function-based Safety Filters and their Resource-Aware Computation</h3>
+      <p class="authors">Pol Mestres, Shima Sadat Mousavi, Pio Ong, Lizhi Yang, Ersin Das et al.</p>
+      <p class="abstract">This paper studies the efficient implementation of safety filters that are designed using control barrier functions (CBFs), which minimally modify a nominal controller to render it safe with respect to a prescribed set of states. Although CBF-based safety filters are often implemented by solving a q...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-12">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-19</span><a href="https://arxiv.org/abs/2601.12885v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>From Vertices to Convex Hulls: Certifying Set-Wise Compatibility for CBF Constraints</h3>
+      <p class="authors">Shima Sadat Mousavi, Xiao Tan, Aaron D. Ames</p>
+      <p class="abstract">This paper develops certificates that propagate compatibility of multiple control barrier function (CBF) constraints from sampled vertices to their convex hull. Under mild concavity and affinity assumptions, we present three sufficient feasibility conditions under which feasible inputs over the conv...</p>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.10118v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Explicit Control Barrier Function-based Safety Filters and their Resource-Aware Computation</h3>
+      <p class="authors">Pol Mestres, Shima Sadat Mousavi, Pio Ong, Lizhi Yang, Ersin Das et al.</p>
+      <p class="abstract">This paper studies the efficient implementation of safety filters that are designed using control barrier functions (CBFs), which minimally modify a nominal controller to render it safe with respect to a prescribed set of states. Although CBF-based safety filters are often implemented by solving a q...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-13">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 133 citations</span><a href="https://arxiv.org/abs/2209.08539" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Dynamic Control Barrier Function-based Model Predictive Control to Safety-Critical Obstacle-Avoidance of Mobile Robot</h3>
+      <p class="authors">Zhu Jian, Zihong Yan, Xuanang Lei, Zih-Rong Lu, Bin Lan et al.</p>
+      <p class="abstract">This paper presents an efficient and safe method to avoid static and dynamic obstacles based on LiDAR. First, point cloud is used to generate a real-time local grid map for obstacle detection. Then, obstacles are clustered by DBSCAN algorithm and enclosed with minimum bounding ellipses (MBEs). In ad...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-14">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 133 citations</span><a href="https://arxiv.org/abs/2209.08539" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Dynamic Control Barrier Function-based Model Predictive Control to Safety-Critical Obstacle-Avoidance of Mobile Robot</h3>
+      <p class="authors">Zhu Jian, Zihong Yan, Xuanang Lei, Zih-Rong Lu, Bin Lan et al.</p>
+      <p class="abstract">This paper presents an efficient and safe method to avoid static and dynamic obstacles based on LiDAR. First, point cloud is used to generate a real-time local grid map for obstacle detection. Then, obstacles are clustered by DBSCAN algorithm and enclosed with minimum bounding ellipses (MBEs). In ad...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-15">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 133 citations</span><a href="https://arxiv.org/abs/2209.08539" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Dynamic Control Barrier Function-based Model Predictive Control to Safety-Critical Obstacle-Avoidance of Mobile Robot</h3>
+      <p class="authors">Zhu Jian, Zihong Yan, Xuanang Lei, Zih-Rong Lu, Bin Lan et al.</p>
+      <p class="abstract">This paper presents an efficient and safe method to avoid static and dynamic obstacles based on LiDAR. First, point cloud is used to generate a real-time local grid map for obstacle detection. Then, obstacles are clustered by DBSCAN algorithm and enclosed with minimum bounding ellipses (MBEs). In ad...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-16">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 133 citations</span><a href="https://arxiv.org/abs/2209.08539" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Dynamic Control Barrier Function-based Model Predictive Control to Safety-Critical Obstacle-Avoidance of Mobile Robot</h3>
+      <p class="authors">Zhu Jian, Zihong Yan, Xuanang Lei, Zih-Rong Lu, Bin Lan et al.</p>
+      <p class="abstract">This paper presents an efficient and safe method to avoid static and dynamic obstacles based on LiDAR. First, point cloud is used to generate a real-time local grid map for obstacle detection. Then, obstacles are clustered by DBSCAN algorithm and enclosed with minimum bounding ellipses (MBEs). In ad...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-17">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 133 citations</span><a href="https://arxiv.org/abs/2209.08539" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Dynamic Control Barrier Function-based Model Predictive Control to Safety-Critical Obstacle-Avoidance of Mobile Robot</h3>
+      <p class="authors">Zhu Jian, Zihong Yan, Xuanang Lei, Zih-Rong Lu, Bin Lan et al.</p>
+      <p class="abstract">This paper presents an efficient and safe method to avoid static and dynamic obstacles based on LiDAR. First, point cloud is used to generate a real-time local grid map for obstacle detection. Then, obstacles are clustered by DBSCAN algorithm and enclosed with minimum bounding ellipses (MBEs). In ad...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-18">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 133 citations</span><a href="https://arxiv.org/abs/2209.08539" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Dynamic Control Barrier Function-based Model Predictive Control to Safety-Critical Obstacle-Avoidance of Mobile Robot</h3>
+      <p class="authors">Zhu Jian, Zihong Yan, Xuanang Lei, Zih-Rong Lu, Bin Lan et al.</p>
+      <p class="abstract">This paper presents an efficient and safe method to avoid static and dynamic obstacles based on LiDAR. First, point cloud is used to generate a real-time local grid map for obstacle detection. Then, obstacles are clustered by DBSCAN algorithm and enclosed with minimum bounding ellipses (MBEs). In ad...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-19">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 133 citations</span><a href="https://arxiv.org/abs/2209.08539" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Dynamic Control Barrier Function-based Model Predictive Control to Safety-Critical Obstacle-Avoidance of Mobile Robot</h3>
+      <p class="authors">Zhu Jian, Zihong Yan, Xuanang Lei, Zih-Rong Lu, Bin Lan et al.</p>
+      <p class="abstract">This paper presents an efficient and safe method to avoid static and dynamic obstacles based on LiDAR. First, point cloud is used to generate a real-time local grid map for obstacle detection. Then, obstacles are clustered by DBSCAN algorithm and enclosed with minimum bounding ellipses (MBEs). In ad...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-20">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 167 citations</span></div>
+      <h3>Guaranteed Obstacle Avoidance for Multi-Robot Operations With Limited Actuation: A Control Barrier Function Approach</h3>
+      <p class="authors">Yuxiao Chen, Andrew W. Singletary, A. Ames</p>
+      <p class="abstract">This letter considers the problem of obstacle avoidance for multiple robotic agents moving in an environment with obstacles. A decentralized supervisory controller is synthesized based on control barrier functions (CBF) that guarantees obstacle avoidance with limited actuation capability. The propos...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-21">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 167 citations</span></div>
+      <h3>Guaranteed Obstacle Avoidance for Multi-Robot Operations With Limited Actuation: A Control Barrier Function Approach</h3>
+      <p class="authors">Yuxiao Chen, Andrew W. Singletary, A. Ames</p>
+      <p class="abstract">This letter considers the problem of obstacle avoidance for multiple robotic agents moving in an environment with obstacles. A decentralized supervisory controller is synthesized based on control barrier functions (CBF) that guarantees obstacle avoidance with limited actuation capability. The propos...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-22">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 217 citations</span></div>
+      <h3>Safe reinforcement learning: A control barrier function optimization approach</h3>
+      <p class="authors">Z. Marvi, Bahare Kiumarsi</p>
+      <p class="abstract">This article presents a learning‐based barrier certified method to learn safe optimal controllers that guarantee operation of safety‐critical systems within their safe regions while providing an optimal performance. The cost function that encodes the designer's objectives is augmented with a control...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-23">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 217 citations</span></div>
+      <h3>Safe reinforcement learning: A control barrier function optimization approach</h3>
+      <p class="authors">Z. Marvi, Bahare Kiumarsi</p>
+      <p class="abstract">This article presents a learning‐based barrier certified method to learn safe optimal controllers that guarantee operation of safety‐critical systems within their safe regions while providing an optimal performance. The cost function that encodes the designer's objectives is augmented with a control...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-24">    <div class="card">
+      <div class="card-header"><span class="badge">🔥 2281 citations</span><a href="https://arxiv.org/abs/1609.06408" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Control Barrier Function Based Quadratic Programs for Safety Critical Systems</h3>
+      <p class="authors">A. Ames, Xiangru Xu, J. Grizzle, P. Tabuada</p>
+      <p class="abstract">Safety critical systems involve the tight coupling between potentially conflicting control objectives and safety constraints. As a means of creating a formal framework for controlling systems of this form, and with a view toward automotive applications, this paper develops a methodology that allows ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-25">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-27</span><a href="https://arxiv.org/abs/2602.23719v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision</h3>
+      <p class="authors">Wenzhe Zhao, Yang Zhao, Ganchao Liu, Zhiyu Jiang, Dandan Ma et al.</p>
+      <p class="abstract">In UAV dynamic decision, complex and variable hazardous factors pose severe challenges to the generalization capability of algorithms. Despite offering semantic understanding and scene generalization, Large Language Models (LLM) lack domain-specific UAV control knowledge and formal safety assurances...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-26">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-27</span><a href="https://arxiv.org/abs/2602.23719v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision</h3>
+      <p class="authors">Wenzhe Zhao, Yang Zhao, Ganchao Liu, Zhiyu Jiang, Dandan Ma et al.</p>
+      <p class="abstract">In UAV dynamic decision, complex and variable hazardous factors pose severe challenges to the generalization capability of algorithms. Despite offering semantic understanding and scene generalization, Large Language Models (LLM) lack domain-specific UAV control knowledge and formal safety assurances...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-27">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-27</span><a href="https://arxiv.org/abs/2602.23719v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision</h3>
+      <p class="authors">Wenzhe Zhao, Yang Zhao, Ganchao Liu, Zhiyu Jiang, Dandan Ma et al.</p>
+      <p class="abstract">In UAV dynamic decision, complex and variable hazardous factors pose severe challenges to the generalization capability of algorithms. Despite offering semantic understanding and scene generalization, Large Language Models (LLM) lack domain-specific UAV control knowledge and formal safety assurances...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-28">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-27</span><a href="https://arxiv.org/abs/2602.23719v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision</h3>
+      <p class="authors">Wenzhe Zhao, Yang Zhao, Ganchao Liu, Zhiyu Jiang, Dandan Ma et al.</p>
+      <p class="abstract">In UAV dynamic decision, complex and variable hazardous factors pose severe challenges to the generalization capability of algorithms. Despite offering semantic understanding and scene generalization, Large Language Models (LLM) lack domain-specific UAV control knowledge and formal safety assurances...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-29">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-27</span><a href="https://arxiv.org/abs/2602.23719v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision</h3>
+      <p class="authors">Wenzhe Zhao, Yang Zhao, Ganchao Liu, Zhiyu Jiang, Dandan Ma et al.</p>
+      <p class="abstract">In UAV dynamic decision, complex and variable hazardous factors pose severe challenges to the generalization capability of algorithms. Despite offering semantic understanding and scene generalization, Large Language Models (LLM) lack domain-specific UAV control knowledge and formal safety assurances...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-30">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-27</span><a href="https://arxiv.org/abs/2602.23719v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision</h3>
+      <p class="authors">Wenzhe Zhao, Yang Zhao, Ganchao Liu, Zhiyu Jiang, Dandan Ma et al.</p>
+      <p class="abstract">In UAV dynamic decision, complex and variable hazardous factors pose severe challenges to the generalization capability of algorithms. Despite offering semantic understanding and scene generalization, Large Language Models (LLM) lack domain-specific UAV control knowledge and formal safety assurances...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-31">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-26</span><a href="https://arxiv.org/abs/2602.23478v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Refining Almost-Safe Value Functions on the Fly</h3>
+      <p class="authors">Sander Tonkens, Sosuke Kojima, Chenhao Liu, Judy Masri, Sylvia Herbert</p>
+      <p class="abstract">Control Barrier Functions (CBFs) are a powerful tool for ensuring robotic safety, but designing or learning valid CBFs for complex systems is a significant challenge. While Hamilton-Jacobi Reachability provides a formal method for synthesizing safe value functions, it scales poorly and is typically ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-32">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-26</span><a href="https://arxiv.org/abs/2602.23478v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Refining Almost-Safe Value Functions on the Fly</h3>
+      <p class="authors">Sander Tonkens, Sosuke Kojima, Chenhao Liu, Judy Masri, Sylvia Herbert</p>
+      <p class="abstract">Control Barrier Functions (CBFs) are a powerful tool for ensuring robotic safety, but designing or learning valid CBFs for complex systems is a significant challenge. While Hamilton-Jacobi Reachability provides a formal method for synthesizing safe value functions, it scales poorly and is typically ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-33">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-26</span><a href="https://arxiv.org/abs/2602.23478v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Refining Almost-Safe Value Functions on the Fly</h3>
+      <p class="authors">Sander Tonkens, Sosuke Kojima, Chenhao Liu, Judy Masri, Sylvia Herbert</p>
+      <p class="abstract">Control Barrier Functions (CBFs) are a powerful tool for ensuring robotic safety, but designing or learning valid CBFs for complex systems is a significant challenge. While Hamilton-Jacobi Reachability provides a formal method for synthesizing safe value functions, it scales poorly and is typically ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-34">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-26</span><a href="https://arxiv.org/abs/2602.23478v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Refining Almost-Safe Value Functions on the Fly</h3>
+      <p class="authors">Sander Tonkens, Sosuke Kojima, Chenhao Liu, Judy Masri, Sylvia Herbert</p>
+      <p class="abstract">Control Barrier Functions (CBFs) are a powerful tool for ensuring robotic safety, but designing or learning valid CBFs for complex systems is a significant challenge. While Hamilton-Jacobi Reachability provides a formal method for synthesizing safe value functions, it scales poorly and is typically ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-35">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-24</span><a href="https://arxiv.org/abs/2602.21429v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Provably Safe Generative Sampling with Constricting Barrier Functions</h3>
+      <p class="authors">Darshan Gadginmath, Ahmed Allibhoy, Fabio Pasqualetti</p>
+      <p class="abstract">Flow-based generative models, such as diffusion models and flow matching models, have achieved remarkable success in learning complex data distributions. However, a critical gap remains for their deployment in safety-critical domains: the lack of formal guarantees that generated samples will satisfy...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-36">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-24</span><a href="https://arxiv.org/abs/2602.21429v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Provably Safe Generative Sampling with Constricting Barrier Functions</h3>
+      <p class="authors">Darshan Gadginmath, Ahmed Allibhoy, Fabio Pasqualetti</p>
+      <p class="abstract">Flow-based generative models, such as diffusion models and flow matching models, have achieved remarkable success in learning complex data distributions. However, a critical gap remains for their deployment in safety-critical domains: the lack of formal guarantees that generated samples will satisfy...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-37">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-24</span><a href="https://arxiv.org/abs/2602.21429v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Provably Safe Generative Sampling with Constricting Barrier Functions</h3>
+      <p class="authors">Darshan Gadginmath, Ahmed Allibhoy, Fabio Pasqualetti</p>
+      <p class="abstract">Flow-based generative models, such as diffusion models and flow matching models, have achieved remarkable success in learning complex data distributions. However, a critical gap remains for their deployment in safety-critical domains: the lack of formal guarantees that generated samples will satisfy...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-38">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.20102v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>BarrierSteer: LLM Safety via Learning Barrier Steering</h3>
+      <p class="authors">Thanh Q. Tran, Arun Verma, Kiwan Wong, Bryan Kian Hsiang Low, Daniela Rus et al.</p>
+      <p class="abstract">Despite the state-of-the-art performance of large language models (LLMs) across diverse tasks, their susceptibility to adversarial attacks and unsafe content generation remains a major obstacle to deployment, particularly in high-stakes settings. Addressing this challenge requires safety mechanisms ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-39">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.20102v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>BarrierSteer: LLM Safety via Learning Barrier Steering</h3>
+      <p class="authors">Thanh Q. Tran, Arun Verma, Kiwan Wong, Bryan Kian Hsiang Low, Daniela Rus et al.</p>
+      <p class="abstract">Despite the state-of-the-art performance of large language models (LLMs) across diverse tasks, their susceptibility to adversarial attacks and unsafe content generation remains a major obstacle to deployment, particularly in high-stakes settings. Addressing this challenge requires safety mechanisms ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-40">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.20102v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>BarrierSteer: LLM Safety via Learning Barrier Steering</h3>
+      <p class="authors">Thanh Q. Tran, Arun Verma, Kiwan Wong, Bryan Kian Hsiang Low, Daniela Rus et al.</p>
+      <p class="abstract">Despite the state-of-the-art performance of large language models (LLMs) across diverse tasks, their susceptibility to adversarial attacks and unsafe content generation remains a major obstacle to deployment, particularly in high-stakes settings. Addressing this challenge requires safety mechanisms ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-41">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.20102v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>BarrierSteer: LLM Safety via Learning Barrier Steering</h3>
+      <p class="authors">Thanh Q. Tran, Arun Verma, Kiwan Wong, Bryan Kian Hsiang Low, Daniela Rus et al.</p>
+      <p class="abstract">Despite the state-of-the-art performance of large language models (LLMs) across diverse tasks, their susceptibility to adversarial attacks and unsafe content generation remains a major obstacle to deployment, particularly in high-stakes settings. Addressing this challenge requires safety mechanisms ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-42">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.20102v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>BarrierSteer: LLM Safety via Learning Barrier Steering</h3>
+      <p class="authors">Thanh Q. Tran, Arun Verma, Kiwan Wong, Bryan Kian Hsiang Low, Daniela Rus et al.</p>
+      <p class="abstract">Despite the state-of-the-art performance of large language models (LLMs) across diverse tasks, their susceptibility to adversarial attacks and unsafe content generation remains a major obstacle to deployment, particularly in high-stakes settings. Addressing this challenge requires safety mechanisms ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-43">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.20076v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Robust Taylor-Lagrange Control for Safety-Critical Systems</h3>
+      <p class="authors">Wei Xiao, Christos Cassandras, Anni Li</p>
+      <p class="abstract">Solving safety-critical control problem has widely adopted the Control Barrier Function (CBF) method. However, the existence of a CBF is only a sufficient condition for system safety. The recently proposed Taylor-Lagrange Control (TLC) method addresses this limitation, but is vulnerable to the feasi...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-44">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.19983v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Contextual Safety Reasoning and Grounding for Open-World Robots</h3>
+      <p class="authors">Zachary Ravichandran, David Snyder, Alexander Robey, Hamed Hassani, Vijay Kumar et al.</p>
+      <p class="abstract">Robots are increasingly operating in open-world environments where safe behavior depends on context: the same hallway may require different navigation strategies when crowded versus empty, or during an emergency versus normal operations. Traditional safety approaches enforce fixed constraints in use...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-45">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.19983v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Contextual Safety Reasoning and Grounding for Open-World Robots</h3>
+      <p class="authors">Zachary Ravichandran, David Snyder, Alexander Robey, Hamed Hassani, Vijay Kumar et al.</p>
+      <p class="abstract">Robots are increasingly operating in open-world environments where safe behavior depends on context: the same hallway may require different navigation strategies when crowded versus empty, or during an emergency versus normal operations. Traditional safety approaches enforce fixed constraints in use...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-46">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.19983v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Contextual Safety Reasoning and Grounding for Open-World Robots</h3>
+      <p class="authors">Zachary Ravichandran, David Snyder, Alexander Robey, Hamed Hassani, Vijay Kumar et al.</p>
+      <p class="abstract">Robots are increasingly operating in open-world environments where safe behavior depends on context: the same hallway may require different navigation strategies when crowded versus empty, or during an emergency versus normal operations. Traditional safety approaches enforce fixed constraints in use...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-47">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.19983v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Contextual Safety Reasoning and Grounding for Open-World Robots</h3>
+      <p class="authors">Zachary Ravichandran, David Snyder, Alexander Robey, Hamed Hassani, Vijay Kumar et al.</p>
+      <p class="abstract">Robots are increasingly operating in open-world environments where safe behavior depends on context: the same hallway may require different navigation strategies when crowded versus empty, or during an emergency versus normal operations. Traditional safety approaches enforce fixed constraints in use...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-48">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.19983v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Contextual Safety Reasoning and Grounding for Open-World Robots</h3>
+      <p class="authors">Zachary Ravichandran, David Snyder, Alexander Robey, Hamed Hassani, Vijay Kumar et al.</p>
+      <p class="abstract">Robots are increasingly operating in open-world environments where safe behavior depends on context: the same hallway may require different navigation strategies when crowded versus empty, or during an emergency versus normal operations. Traditional safety approaches enforce fixed constraints in use...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-49">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-23</span><a href="https://arxiv.org/abs/2602.19983v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Contextual Safety Reasoning and Grounding for Open-World Robots</h3>
+      <p class="authors">Zachary Ravichandran, David Snyder, Alexander Robey, Hamed Hassani, Vijay Kumar et al.</p>
+      <p class="abstract">Robots are increasingly operating in open-world environments where safe behavior depends on context: the same hallway may require different navigation strategies when crowded versus empty, or during an emergency versus normal operations. Traditional safety approaches enforce fixed constraints in use...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-50">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-22</span><a href="https://arxiv.org/abs/2602.19070v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Cooperative Transportation Without Prior Object Knowledge via Adaptive Self-Allocation and Coordination</h3>
+      <p class="authors">Jie Song, Yang Bai, Naoki Wakamiya</p>
+      <p class="abstract">This work proposes a novel cooperative transportation framework for multi-agent systems that does not require any prior knowledge of cargo locations or sizes. Each agent relies on local sensing to detect cargos, recruit nearby agents, and autonomously form a transportation team with an appropriate s...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-51">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-22</span><a href="https://arxiv.org/abs/2602.19070v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Cooperative Transportation Without Prior Object Knowledge via Adaptive Self-Allocation and Coordination</h3>
+      <p class="authors">Jie Song, Yang Bai, Naoki Wakamiya</p>
+      <p class="abstract">This work proposes a novel cooperative transportation framework for multi-agent systems that does not require any prior knowledge of cargo locations or sizes. Each agent relies on local sensing to detect cargos, recruit nearby agents, and autonomously form a transportation team with an appropriate s...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-52">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-22</span><a href="https://arxiv.org/abs/2602.19070v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Cooperative Transportation Without Prior Object Knowledge via Adaptive Self-Allocation and Coordination</h3>
+      <p class="authors">Jie Song, Yang Bai, Naoki Wakamiya</p>
+      <p class="abstract">This work proposes a novel cooperative transportation framework for multi-agent systems that does not require any prior knowledge of cargo locations or sizes. Each agent relies on local sensing to detect cargos, recruit nearby agents, and autonomously form a transportation team with an appropriate s...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-53">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-14</span><a href="https://arxiv.org/abs/2602.13789v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>TEG: Exascale Cluster Governance via Non-Equilibrium Thermodynamics and Langevin Dynamics</h3>
+      <p class="authors">Zhengyan Chu</p>
+      <p class="abstract">As cloud computing scales toward the Exascale regime ($10^5+$ nodes), the prevailing "Newtonian" orchestration paradigm -- exemplified by Kubernetes -- approaches fundamental physical limits. The centralized, deterministic scheduling model suffers from $O(N)$ latency scaling, "Head-of-Line" blocking...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-54">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-13</span><a href="https://arxiv.org/abs/2602.15061v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe-SDL:Establishing Safety Boundaries and Control Mechanisms for AI-Driven Self-Driving Laboratories</h3>
+      <p class="authors">Zihan Zhang, Haohui Que, Junhan Chang, Xin Zhang, Hao Wei et al.</p>
+      <p class="abstract">The emergence of Self-Driving Laboratories (SDLs) transforms scientific discovery methodology by integrating AI with robotic automation to create closed-loop experimental systems capable of autonomous hypothesis generation, experimentation, and analysis. While promising to compress research timeline...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-55">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-13</span><a href="https://arxiv.org/abs/2602.15061v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe-SDL:Establishing Safety Boundaries and Control Mechanisms for AI-Driven Self-Driving Laboratories</h3>
+      <p class="authors">Zihan Zhang, Haohui Que, Junhan Chang, Xin Zhang, Hao Wei et al.</p>
+      <p class="abstract">The emergence of Self-Driving Laboratories (SDLs) transforms scientific discovery methodology by integrating AI with robotic automation to create closed-loop experimental systems capable of autonomous hypothesis generation, experimentation, and analysis. While promising to compress research timeline...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-56">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-13</span><a href="https://arxiv.org/abs/2602.15061v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe-SDL:Establishing Safety Boundaries and Control Mechanisms for AI-Driven Self-Driving Laboratories</h3>
+      <p class="authors">Zihan Zhang, Haohui Que, Junhan Chang, Xin Zhang, Hao Wei et al.</p>
+      <p class="abstract">The emergence of Self-Driving Laboratories (SDLs) transforms scientific discovery methodology by integrating AI with robotic automation to create closed-loop experimental systems capable of autonomous hypothesis generation, experimentation, and analysis. While promising to compress research timeline...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-57">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-13</span><a href="https://arxiv.org/abs/2602.15061v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe-SDL:Establishing Safety Boundaries and Control Mechanisms for AI-Driven Self-Driving Laboratories</h3>
+      <p class="authors">Zihan Zhang, Haohui Que, Junhan Chang, Xin Zhang, Hao Wei et al.</p>
+      <p class="abstract">The emergence of Self-Driving Laboratories (SDLs) transforms scientific discovery methodology by integrating AI with robotic automation to create closed-loop experimental systems capable of autonomous hypothesis generation, experimentation, and analysis. While promising to compress research timeline...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-58">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-13</span><a href="https://arxiv.org/abs/2602.15061v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe-SDL:Establishing Safety Boundaries and Control Mechanisms for AI-Driven Self-Driving Laboratories</h3>
+      <p class="authors">Zihan Zhang, Haohui Que, Junhan Chang, Xin Zhang, Hao Wei et al.</p>
+      <p class="abstract">The emergence of Self-Driving Laboratories (SDLs) transforms scientific discovery methodology by integrating AI with robotic automation to create closed-loop experimental systems capable of autonomous hypothesis generation, experimentation, and analysis. While promising to compress research timeline...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-59">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-13</span><a href="https://arxiv.org/abs/2602.15061v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe-SDL:Establishing Safety Boundaries and Control Mechanisms for AI-Driven Self-Driving Laboratories</h3>
+      <p class="authors">Zihan Zhang, Haohui Que, Junhan Chang, Xin Zhang, Hao Wei et al.</p>
+      <p class="abstract">The emergence of Self-Driving Laboratories (SDLs) transforms scientific discovery methodology by integrating AI with robotic automation to create closed-loop experimental systems capable of autonomous hypothesis generation, experimentation, and analysis. While promising to compress research timeline...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-60">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-12</span><a href="https://arxiv.org/abs/2602.12416v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Control Barrier Functions with Audio Risk Awareness for Robot Safe Navigation on Construction Sites</h3>
+      <p class="authors">Johannes Mootz, Reza Akhavian</p>
+      <p class="abstract">Construction automation increasingly requires autonomous mobile robots, yet robust autonomy remains challenging on construction sites. These environments are dynamic and often visually occluded, which complicates perception and navigation. In this context, valuable information from audio sources rem...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-61">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-12</span><a href="https://arxiv.org/abs/2602.12416v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Control Barrier Functions with Audio Risk Awareness for Robot Safe Navigation on Construction Sites</h3>
+      <p class="authors">Johannes Mootz, Reza Akhavian</p>
+      <p class="abstract">Construction automation increasingly requires autonomous mobile robots, yet robust autonomy remains challenging on construction sites. These environments are dynamic and often visually occluded, which complicates perception and navigation. In this context, valuable information from audio sources rem...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-62">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-11</span><a href="https://arxiv.org/abs/2602.11049v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SQ-CBF: Signed Distance Functions for Numerically Stable Superquadric-Based Safety Filtering</h3>
+      <p class="authors">Haocheng Zhao, Lukas Brunke, Oliver Lagerquist, Siqi Zhou, Angela P. Schoellig</p>
+      <p class="abstract">Ensuring safe robot operation in cluttered and dynamic environments remains a fundamental challenge. While control barrier functions provide an effective framework for real-time safety filtering, their performance critically depends on the underlying geometric representation, which is often simplifi...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-63">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-11</span><a href="https://arxiv.org/abs/2602.11049v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SQ-CBF: Signed Distance Functions for Numerically Stable Superquadric-Based Safety Filtering</h3>
+      <p class="authors">Haocheng Zhao, Lukas Brunke, Oliver Lagerquist, Siqi Zhou, Angela P. Schoellig</p>
+      <p class="abstract">Ensuring safe robot operation in cluttered and dynamic environments remains a fundamental challenge. While control barrier functions provide an effective framework for real-time safety filtering, their performance critically depends on the underlying geometric representation, which is often simplifi...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-64">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-11</span><a href="https://arxiv.org/abs/2602.11049v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SQ-CBF: Signed Distance Functions for Numerically Stable Superquadric-Based Safety Filtering</h3>
+      <p class="authors">Haocheng Zhao, Lukas Brunke, Oliver Lagerquist, Siqi Zhou, Angela P. Schoellig</p>
+      <p class="abstract">Ensuring safe robot operation in cluttered and dynamic environments remains a fundamental challenge. While control barrier functions provide an effective framework for real-time safety filtering, their performance critically depends on the underlying geometric representation, which is often simplifi...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-65">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-11</span><a href="https://arxiv.org/abs/2602.11049v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SQ-CBF: Signed Distance Functions for Numerically Stable Superquadric-Based Safety Filtering</h3>
+      <p class="authors">Haocheng Zhao, Lukas Brunke, Oliver Lagerquist, Siqi Zhou, Angela P. Schoellig</p>
+      <p class="abstract">Ensuring safe robot operation in cluttered and dynamic environments remains a fundamental challenge. While control barrier functions provide an effective framework for real-time safety filtering, their performance critically depends on the underlying geometric representation, which is often simplifi...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-66">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-11</span><a href="https://arxiv.org/abs/2602.11049v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>SQ-CBF: Signed Distance Functions for Numerically Stable Superquadric-Based Safety Filtering</h3>
+      <p class="authors">Haocheng Zhao, Lukas Brunke, Oliver Lagerquist, Siqi Zhou, Angela P. Schoellig</p>
+      <p class="abstract">Ensuring safe robot operation in cluttered and dynamic environments remains a fundamental challenge. While control barrier functions provide an effective framework for real-time safety filtering, their performance critically depends on the underlying geometric representation, which is often simplifi...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-67">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-10</span><a href="https://arxiv.org/abs/2602.10007v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>A Collaborative Safety Shield for Safe and Efficient CAV Lane Changes in Congested On-Ramp Merging</h3>
+      <p class="authors">Bharathkumar Hegde, Melanie Bouroche</p>
+      <p class="abstract">Lane changing in dense traffic is a significant challenge for Connected and Autonomous Vehicles (CAVs). Existing lane change controllers primarily either ensure safety or collaboratively improve traffic efficiency, but do not consider these conflicting objectives together. To address this, we propos...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-68">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-10</span><a href="https://arxiv.org/abs/2602.10007v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>A Collaborative Safety Shield for Safe and Efficient CAV Lane Changes in Congested On-Ramp Merging</h3>
+      <p class="authors">Bharathkumar Hegde, Melanie Bouroche</p>
+      <p class="abstract">Lane changing in dense traffic is a significant challenge for Connected and Autonomous Vehicles (CAVs). Existing lane change controllers primarily either ensure safety or collaboratively improve traffic efficiency, but do not consider these conflicting objectives together. To address this, we propos...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-69">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-10</span><a href="https://arxiv.org/abs/2602.09928v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Feedback Optimization through Control Barrier Functions</h3>
+      <p class="authors">Giannis Delimpaltadakis, Pol Mestres, Jorge Cortés, W. P. M. H. Heemels</p>
+      <p class="abstract">Feedback optimization refers to a class of methods that steer a control system to a steady state that solves an optimization problem. Despite tremendous progress on the topic, an important problem remains open: enforcing state constraints at all times. The difficulty in addressing it lies on mediati...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-70">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-10</span><a href="https://arxiv.org/abs/2602.09928v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Feedback Optimization through Control Barrier Functions</h3>
+      <p class="authors">Giannis Delimpaltadakis, Pol Mestres, Jorge Cortés, W. P. M. H. Heemels</p>
+      <p class="abstract">Feedback optimization refers to a class of methods that steer a control system to a steady state that solves an optimization problem. Despite tremendous progress on the topic, an important problem remains open: enforcing state constraints at all times. The difficulty in addressing it lies on mediati...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-71">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-10</span><a href="https://arxiv.org/abs/2602.09928v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Feedback Optimization through Control Barrier Functions</h3>
+      <p class="authors">Giannis Delimpaltadakis, Pol Mestres, Jorge Cortés, W. P. M. H. Heemels</p>
+      <p class="abstract">Feedback optimization refers to a class of methods that steer a control system to a steady state that solves an optimization problem. Despite tremendous progress on the topic, an important problem remains open: enforcing state constraints at all times. The difficulty in addressing it lies on mediati...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-72">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-08</span><a href="https://arxiv.org/abs/2602.08116v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>From Ellipsoids to Midair Control of Dynamic Hitches</h3>
+      <p class="authors">Jiawei Xu, Subhrajit Bhattacharya, David Saldaña</p>
+      <p class="abstract">The ability to dynamically manipulate interaction between cables, carried by pairs of aerial vehicles attached to the ends of each cable, can greatly improve the versatility and agility of cable-assisted aerial manipulation. Such interlacing cables create hitches by winding two or more cables around...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-73">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-08</span><a href="https://arxiv.org/abs/2602.08116v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>From Ellipsoids to Midair Control of Dynamic Hitches</h3>
+      <p class="authors">Jiawei Xu, Subhrajit Bhattacharya, David Saldaña</p>
+      <p class="abstract">The ability to dynamically manipulate interaction between cables, carried by pairs of aerial vehicles attached to the ends of each cable, can greatly improve the versatility and agility of cable-assisted aerial manipulation. Such interlacing cables create hitches by winding two or more cables around...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-74">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-08</span><a href="https://arxiv.org/abs/2602.08116v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>From Ellipsoids to Midair Control of Dynamic Hitches</h3>
+      <p class="authors">Jiawei Xu, Subhrajit Bhattacharya, David Saldaña</p>
+      <p class="abstract">The ability to dynamically manipulate interaction between cables, carried by pairs of aerial vehicles attached to the ends of each cable, can greatly improve the versatility and agility of cable-assisted aerial manipulation. Such interlacing cables create hitches by winding two or more cables around...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-75">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-07</span><a href="https://arxiv.org/abs/2602.07363v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>UEREBot: Learning Safe Quadrupedal Locomotion under Unstructured Environments and High-Speed Dynamic Obstacles</h3>
+      <p class="authors">Zihao Xu, Runyu Lei, Zihao Li, Boxi Lin, Ce Hao et al.</p>
+      <p class="abstract">Quadruped robots are increasingly deployed in unstructured environments. Safe locomotion in these settings requires long-horizon goal progress, passability over uneven terrain and static constraints, and collision avoidance against high-speed dynamic obstacles. A single system cannot fully satisfy a...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-76">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-07</span><a href="https://arxiv.org/abs/2602.07363v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>UEREBot: Learning Safe Quadrupedal Locomotion under Unstructured Environments and High-Speed Dynamic Obstacles</h3>
+      <p class="authors">Zihao Xu, Runyu Lei, Zihao Li, Boxi Lin, Ce Hao et al.</p>
+      <p class="abstract">Quadruped robots are increasingly deployed in unstructured environments. Safe locomotion in these settings requires long-horizon goal progress, passability over uneven terrain and static constraints, and collision avoidance against high-speed dynamic obstacles. A single system cannot fully satisfy a...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-77">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-07</span><a href="https://arxiv.org/abs/2602.07363v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>UEREBot: Learning Safe Quadrupedal Locomotion under Unstructured Environments and High-Speed Dynamic Obstacles</h3>
+      <p class="authors">Zihao Xu, Runyu Lei, Zihao Li, Boxi Lin, Ce Hao et al.</p>
+      <p class="abstract">Quadruped robots are increasingly deployed in unstructured environments. Safe locomotion in these settings requires long-horizon goal progress, passability over uneven terrain and static constraints, and collision avoidance against high-speed dynamic obstacles. A single system cannot fully satisfy a...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-78">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-07</span><a href="https://arxiv.org/abs/2602.07363v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>UEREBot: Learning Safe Quadrupedal Locomotion under Unstructured Environments and High-Speed Dynamic Obstacles</h3>
+      <p class="authors">Zihao Xu, Runyu Lei, Zihao Li, Boxi Lin, Ce Hao et al.</p>
+      <p class="abstract">Quadruped robots are increasingly deployed in unstructured environments. Safe locomotion in these settings requires long-horizon goal progress, passability over uneven terrain and static constraints, and collision avoidance against high-speed dynamic obstacles. A single system cannot fully satisfy a...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-79">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-07</span><a href="https://arxiv.org/abs/2602.07363v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>UEREBot: Learning Safe Quadrupedal Locomotion under Unstructured Environments and High-Speed Dynamic Obstacles</h3>
+      <p class="authors">Zihao Xu, Runyu Lei, Zihao Li, Boxi Lin, Ce Hao et al.</p>
+      <p class="abstract">Quadruped robots are increasingly deployed in unstructured environments. Safe locomotion in these settings requires long-horizon goal progress, passability over uneven terrain and static constraints, and collision avoidance against high-speed dynamic obstacles. A single system cannot fully satisfy a...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-80">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-07</span><a href="https://arxiv.org/abs/2602.07335v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Meta-Reinforcement Learning for Robust and Non-greedy Control Barrier Functions in Spacecraft Proximity Operations</h3>
+      <p class="authors">Minduli C. Wijayatunga, Richard Linares, Roberto Armellin</p>
+      <p class="abstract">Autonomous spacecraft inspection and docking missions require controllers that can guarantee safety under thrust constraints and uncertainty. Input-constrained control barrier functions (ICCBFs) provide a framework for safety certification under bounded actuation; however, conventional ICCBF formula...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-81">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-07</span><a href="https://arxiv.org/abs/2602.07335v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Meta-Reinforcement Learning for Robust and Non-greedy Control Barrier Functions in Spacecraft Proximity Operations</h3>
+      <p class="authors">Minduli C. Wijayatunga, Richard Linares, Roberto Armellin</p>
+      <p class="abstract">Autonomous spacecraft inspection and docking missions require controllers that can guarantee safety under thrust constraints and uncertainty. Input-constrained control barrier functions (ICCBFs) provide a framework for safety certification under bounded actuation; however, conventional ICCBF formula...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-82">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.05011v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Banach Control Barrier Functions for Large-Scale Swarm Control</h3>
+      <p class="authors">Xuting Gao, Guillem Pascual, Scott Brown, Sonia Martínez</p>
+      <p class="abstract">This paper studies the safe control of very large multi-agent systems via a generalized framework that employs so-called Banach Control Barrier Functions (B-CBFs). Modeling a large swarm as probability distribution over a spatial domain, we show how B-CBFs can be used to appropriately capture a vari...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-83">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.05011v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Banach Control Barrier Functions for Large-Scale Swarm Control</h3>
+      <p class="authors">Xuting Gao, Guillem Pascual, Scott Brown, Sonia Martínez</p>
+      <p class="abstract">This paper studies the safe control of very large multi-agent systems via a generalized framework that employs so-called Banach Control Barrier Functions (B-CBFs). Modeling a large swarm as probability distribution over a spatial domain, we show how B-CBFs can be used to appropriately capture a vari...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-84">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.05011v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Banach Control Barrier Functions for Large-Scale Swarm Control</h3>
+      <p class="authors">Xuting Gao, Guillem Pascual, Scott Brown, Sonia Martínez</p>
+      <p class="abstract">This paper studies the safe control of very large multi-agent systems via a generalized framework that employs so-called Banach Control Barrier Functions (B-CBFs). Modeling a large swarm as probability distribution over a spatial domain, we show how B-CBFs can be used to appropriately capture a vari...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-85">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.05011v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Banach Control Barrier Functions for Large-Scale Swarm Control</h3>
+      <p class="authors">Xuting Gao, Guillem Pascual, Scott Brown, Sonia Martínez</p>
+      <p class="abstract">This paper studies the safe control of very large multi-agent systems via a generalized framework that employs so-called Banach Control Barrier Functions (B-CBFs). Modeling a large swarm as probability distribution over a spatial domain, we show how B-CBFs can be used to appropriately capture a vari...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-86">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.04656v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Adaptive Control of Parabolic PDE-ODE Cascades</h3>
+      <p class="authors">Yun Jiang, Ji Wang</p>
+      <p class="abstract">In this paper, we propose a safe adaptive boundary control strategy for a class of parabolic partial differential equation-ordinary differential equation (PDE-ODE) cascaded systems with parametric uncertainties in both the PDE and ODE subsystems. The proposed design is built upon an adaptive Control...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-87">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.04568v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Peak Bounds for the Estimation Error under Sensor Attacks</h3>
+      <p class="authors">Axel Stafström, Daniel Arnström, Adam Miksits, David Umsonst</p>
+      <p class="abstract">This paper investigates bounds on the estimation error of a linear system affected by norm-bounded disturbances and full sensor attacks. The system is equipped with a detector that evaluates the norm of the innovation signal to detect faults, and the attacker wants to avoid detection. We utilize ind...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-88">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.04568v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Peak Bounds for the Estimation Error under Sensor Attacks</h3>
+      <p class="authors">Axel Stafström, Daniel Arnström, Adam Miksits, David Umsonst</p>
+      <p class="abstract">This paper investigates bounds on the estimation error of a linear system affected by norm-bounded disturbances and full sensor attacks. The system is equipped with a detector that evaluates the norm of the innovation signal to detect faults, and the attacker wants to avoid detection. We utilize ind...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-89">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.04568v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Peak Bounds for the Estimation Error under Sensor Attacks</h3>
+      <p class="authors">Axel Stafström, Daniel Arnström, Adam Miksits, David Umsonst</p>
+      <p class="abstract">This paper investigates bounds on the estimation error of a linear system affected by norm-bounded disturbances and full sensor attacks. The system is equipped with a detector that evaluates the norm of the innovation signal to detect faults, and the attacker wants to avoid detection. We utilize ind...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-90">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-04</span><a href="https://arxiv.org/abs/2602.04568v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Peak Bounds for the Estimation Error under Sensor Attacks</h3>
+      <p class="authors">Axel Stafström, Daniel Arnström, Adam Miksits, David Umsonst</p>
+      <p class="abstract">This paper investigates bounds on the estimation error of a linear system affected by norm-bounded disturbances and full sensor attacks. The system is equipped with a detector that evaluates the norm of the innovation signal to detect faults, and the attacker wants to avoid detection. We utilize ind...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-91">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-03</span><a href="https://arxiv.org/abs/2602.03987v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Towards X-embodiment safety: A control theory perspective on transferring safety certificates across dynamical systems</h3>
+      <p class="authors">Nikolaos Bousias, George Pappas</p>
+      <p class="abstract">Control barrier functions (CBFs) provide a powerful tool for enforcing safety constraints in control systems, but their direct application to complex, high-dimensional dynamics is often challenging. In many settings, safety certificates are more naturally designed for simplified or alternative syste...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-92">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-03</span><a href="https://arxiv.org/abs/2602.03987v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Towards X-embodiment safety: A control theory perspective on transferring safety certificates across dynamical systems</h3>
+      <p class="authors">Nikolaos Bousias, George Pappas</p>
+      <p class="abstract">Control barrier functions (CBFs) provide a powerful tool for enforcing safety constraints in control systems, but their direct application to complex, high-dimensional dynamics is often challenging. In many settings, safety certificates are more naturally designed for simplified or alternative syste...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-93">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-02</span><a href="https://arxiv.org/abs/2602.02452v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Robust Safety-Critical Control of Networked SIR Dynamics</h3>
+      <p class="authors">Saba Samadi, Brooks A. Butler, Philip E. Paré</p>
+      <p class="abstract">We present a robust safety-critical control framework tailored for networked susceptible-infected-recovered (SIR) epidemic dynamics, leveraging control barrier functions (CBFs) and robust control barrier functions to address the challenges of epidemic spread and mitigation. In our networked SIR mode...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-94">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-02-02</span><a href="https://arxiv.org/abs/2602.02452v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Robust Safety-Critical Control of Networked SIR Dynamics</h3>
+      <p class="authors">Saba Samadi, Brooks A. Butler, Philip E. Paré</p>
+      <p class="abstract">We present a robust safety-critical control framework tailored for networked susceptible-infected-recovered (SIR) epidemic dynamics, leveraging control barrier functions (CBFs) and robust control barrier functions to address the challenges of epidemic spread and mitigation. In our networked SIR mode...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-95">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-31</span><a href="https://arxiv.org/abs/2602.00868v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Stochastic Explorer: Enabling Safe Goal Driven Exploration in Stochastic Environments and Safe Interaction with Unknown Objects</h3>
+      <p class="authors">Nikhil Uday Shinde, Dylan Hirsch, Michael C. Yip, Sylvia Herbert</p>
+      <p class="abstract">Autonomous robots operating in unstructured, safety-critical environments, from planetary exploration to warehouses and homes, must learn to safely navigate and interact with their surroundings despite limited prior knowledge. Current methods for safe control, such as Hamilton-Jacobi Reachability an...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-96">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-31</span><a href="https://arxiv.org/abs/2602.00868v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Stochastic Explorer: Enabling Safe Goal Driven Exploration in Stochastic Environments and Safe Interaction with Unknown Objects</h3>
+      <p class="authors">Nikhil Uday Shinde, Dylan Hirsch, Michael C. Yip, Sylvia Herbert</p>
+      <p class="abstract">Autonomous robots operating in unstructured, safety-critical environments, from planetary exploration to warehouses and homes, must learn to safely navigate and interact with their surroundings despite limited prior knowledge. Current methods for safe control, such as Hamilton-Jacobi Reachability an...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-97">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-31</span><a href="https://arxiv.org/abs/2602.00868v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Stochastic Explorer: Enabling Safe Goal Driven Exploration in Stochastic Environments and Safe Interaction with Unknown Objects</h3>
+      <p class="authors">Nikhil Uday Shinde, Dylan Hirsch, Michael C. Yip, Sylvia Herbert</p>
+      <p class="abstract">Autonomous robots operating in unstructured, safety-critical environments, from planetary exploration to warehouses and homes, must learn to safely navigate and interact with their surroundings despite limited prior knowledge. Current methods for safe control, such as Hamilton-Jacobi Reachability an...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-98">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-30</span><a href="https://arxiv.org/abs/2602.00366v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Learning Safety-Guaranteed, Non-Greedy Control Barrier Functions Using Reinforcement Learning</h3>
+      <p class="authors">Minduli Wijayatunga, Nathan Wallace, Salah Sukkarieh, Roberto Armellin</p>
+      <p class="abstract">Spacecraft rendezvous and proximity operations (RPO) pose safety risks to high-value assets, so formal safety guarantees are critical. Yet conservative safety controllers can reduce mission efficiency. We propose a unified two-stage reinforcement learning (RL) framework that addresses two complement...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-99">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-30</span><a href="https://arxiv.org/abs/2602.00366v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Learning Safety-Guaranteed, Non-Greedy Control Barrier Functions Using Reinforcement Learning</h3>
+      <p class="authors">Minduli Wijayatunga, Nathan Wallace, Salah Sukkarieh, Roberto Armellin</p>
+      <p class="abstract">Spacecraft rendezvous and proximity operations (RPO) pose safety risks to high-value assets, so formal safety guarantees are critical. Yet conservative safety controllers can reduce mission efficiency. We propose a unified two-stage reinforcement learning (RL) framework that addresses two complement...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-100">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-30</span><a href="https://arxiv.org/abs/2602.00366v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Learning Safety-Guaranteed, Non-Greedy Control Barrier Functions Using Reinforcement Learning</h3>
+      <p class="authors">Minduli Wijayatunga, Nathan Wallace, Salah Sukkarieh, Roberto Armellin</p>
+      <p class="abstract">Spacecraft rendezvous and proximity operations (RPO) pose safety risks to high-value assets, so formal safety guarantees are critical. Yet conservative safety controllers can reduce mission efficiency. We propose a unified two-stage reinforcement learning (RL) framework that addresses two complement...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-101">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-25</span><a href="https://arxiv.org/abs/2601.17683v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Composite Adaptive Control Barrier Functions for Safety-Critical Systems with Parametric Uncertainty</h3>
+      <p class="authors">Mohammadreza Kamaldar</p>
+      <p class="abstract">Control barrier functions guarantee safety but typically require accurate system models. Parametric uncertainty invalidates these guarantees. Existing robust methods maintain safety via worst-case bounds, limiting performance, while modular learning schemes decouple estimation from safety, permittin...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-102">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-22</span><a href="https://arxiv.org/abs/2601.16198v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Stochastic Control Barrier Functions under State Estimation: From Euclidean Space to Lie Groups</h3>
+      <p class="authors">Ruoyu Lin, Magnus Egerstedt</p>
+      <p class="abstract">Ensuring safety for autonomous systems under uncertainty remains challenging, particularly when safety of the true state is required despite the true state not being fully known. Control barrier functions (CBFs) have become widely adopted as safety filters. However, standard CBF formulations do not ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-103">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-22</span><a href="https://arxiv.org/abs/2601.16198v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Stochastic Control Barrier Functions under State Estimation: From Euclidean Space to Lie Groups</h3>
+      <p class="authors">Ruoyu Lin, Magnus Egerstedt</p>
+      <p class="abstract">Ensuring safety for autonomous systems under uncertainty remains challenging, particularly when safety of the true state is required despite the true state not being fully known. Control barrier functions (CBFs) have become widely adopted as safety filters. However, standard CBF formulations do not ...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-104">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-21</span><a href="https://arxiv.org/abs/2601.15196v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>TTCBF: A Truncated Taylor Control Barrier Function for High-Order Safety Constraints</h3>
+      <p class="authors">Jianye Xu, Bassam Alrifaee</p>
+      <p class="abstract">Control Barrier Functions (CBFs) enforce safety by rendering a prescribed safe set forward invariant. However, standard CBFs are limited to safety constraints with relative degree one, while High-Order CBF (HOCBF) methods address higher relative degree at the cost of introducing a chain of auxiliary...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-105">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-21</span><a href="https://arxiv.org/abs/2601.15196v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>TTCBF: A Truncated Taylor Control Barrier Function for High-Order Safety Constraints</h3>
+      <p class="authors">Jianye Xu, Bassam Alrifaee</p>
+      <p class="abstract">Control Barrier Functions (CBFs) enforce safety by rendering a prescribed safe set forward invariant. However, standard CBFs are limited to safety constraints with relative degree one, while High-Order CBF (HOCBF) methods address higher relative degree at the cost of introducing a chain of auxiliary...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-106">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-20</span><a href="https://arxiv.org/abs/2601.14089v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Data-Driven Safe Output Regulation of Strict-Feedback Linear Systems with Input Delay</h3>
+      <p class="authors">Zhenxu Zhao, Ji Wang, Weiyao Lan</p>
+      <p class="abstract">This paper develops a data-driven safe control framework for linear systems possessing a known strict-feedback structure, but with most plant parameters, external disturbances, and input delay being unknown. By leveraging Koopman operator theory, we utilize Krylov dynamic mode decomposition (DMD) to...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-107">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-20</span><a href="https://arxiv.org/abs/2601.14089v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Data-Driven Safe Output Regulation of Strict-Feedback Linear Systems with Input Delay</h3>
+      <p class="authors">Zhenxu Zhao, Ji Wang, Weiyao Lan</p>
+      <p class="abstract">This paper develops a data-driven safe control framework for linear systems possessing a known strict-feedback structure, but with most plant parameters, external disturbances, and input delay being unknown. By leveraging Koopman operator theory, we utilize Krylov dynamic mode decomposition (DMD) to...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-108">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-19</span><a href="https://arxiv.org/abs/2601.13057v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Convex Model Predictive Control for Safe Output Consensus of Nonlinear Multi-Agent Systems</h3>
+      <p class="authors">Chao Wang, Shuyuan Zhang, Lei Wang</p>
+      <p class="abstract">Nonlinear dynamics and safety constraints typically result in a nonlinear programming problem when applying model predictive control to achieve safe output consensus. To avoid the heavy computational burden of solving a nonlinear programming problem directly, this paper proposes a novel Convex Model...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-109">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-19</span><a href="https://arxiv.org/abs/2601.13057v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Convex Model Predictive Control for Safe Output Consensus of Nonlinear Multi-Agent Systems</h3>
+      <p class="authors">Chao Wang, Shuyuan Zhang, Lei Wang</p>
+      <p class="abstract">Nonlinear dynamics and safety constraints typically result in a nonlinear programming problem when applying model predictive control to achieve safe output consensus. To avoid the heavy computational burden of solving a nonlinear programming problem directly, this paper proposes a novel Convex Model...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-110">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-19</span><a href="https://arxiv.org/abs/2601.13057v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Convex Model Predictive Control for Safe Output Consensus of Nonlinear Multi-Agent Systems</h3>
+      <p class="authors">Chao Wang, Shuyuan Zhang, Lei Wang</p>
+      <p class="abstract">Nonlinear dynamics and safety constraints typically result in a nonlinear programming problem when applying model predictive control to achieve safe output consensus. To avoid the heavy computational burden of solving a nonlinear programming problem directly, this paper proposes a novel Convex Model...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-111">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-19</span><a href="https://arxiv.org/abs/2601.12885v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>From Vertices to Convex Hulls: Certifying Set-Wise Compatibility for CBF Constraints</h3>
+      <p class="authors">Shima Sadat Mousavi, Xiao Tan, Aaron D. Ames</p>
+      <p class="abstract">This paper develops certificates that propagate compatibility of multiple control barrier function (CBF) constraints from sampled vertices to their convex hull. Under mild concavity and affinity assumptions, we present three sufficient feasibility conditions under which feasible inputs over the conv...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-112">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-18</span><a href="https://arxiv.org/abs/2601.12616v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Allocating Corrective Control to Mitigate Multi-agent Safety Violations Under Private Preferences</h3>
+      <p class="authors">Johnathan Corbin, Sarah H. Q. Li, Jonathan Rogers</p>
+      <p class="abstract">We propose a novel framework that computes the corrective control efforts to ensure joint safety in multi-agent dynamical systems. This framework efficiently distributes the required corrective effort without revealing individual agents' private preferences. Our framework integrates high-order contr...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-113">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-18</span><a href="https://arxiv.org/abs/2601.12616v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Allocating Corrective Control to Mitigate Multi-agent Safety Violations Under Private Preferences</h3>
+      <p class="authors">Johnathan Corbin, Sarah H. Q. Li, Jonathan Rogers</p>
+      <p class="abstract">We propose a novel framework that computes the corrective control efforts to ensure joint safety in multi-agent dynamical systems. This framework efficiently distributes the required corrective effort without revealing individual agents' private preferences. Our framework integrates high-order contr...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-114">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-18</span><a href="https://arxiv.org/abs/2601.12616v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Allocating Corrective Control to Mitigate Multi-agent Safety Violations Under Private Preferences</h3>
+      <p class="authors">Johnathan Corbin, Sarah H. Q. Li, Jonathan Rogers</p>
+      <p class="abstract">We propose a novel framework that computes the corrective control efforts to ensure joint safety in multi-agent dynamical systems. This framework efficiently distributes the required corrective effort without revealing individual agents' private preferences. Our framework integrates high-order contr...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-115">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-17</span><a href="https://arxiv.org/abs/2601.12143v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Neural Process-Based Reactive Controller for Autonomous Racing</h3>
+      <p class="authors">Devin Hunter, Chinwendu Enyioha</p>
+      <p class="abstract">Attention-based neural architectures have become central to state-of-the-art methods in real-time nonlinear control. As these data-driven models continue to be integrated into increasingly safety-critical domains, ensuring statistically grounded and provably safe decision-making becomes essential. T...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-116">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-17</span><a href="https://arxiv.org/abs/2601.12143v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Neural Process-Based Reactive Controller for Autonomous Racing</h3>
+      <p class="authors">Devin Hunter, Chinwendu Enyioha</p>
+      <p class="abstract">Attention-based neural architectures have become central to state-of-the-art methods in real-time nonlinear control. As these data-driven models continue to be integrated into increasingly safety-critical domains, ensuring statistically grounded and provably safe decision-making becomes essential. T...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-117">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-16</span><a href="https://arxiv.org/abs/2601.11335v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Distributed Control Barrier Functions for Safe Multi-Vehicle Navigation in Heterogeneous USV Fleets</h3>
+      <p class="authors">Tyler Paine, Brendan Long, Jeremy Wenger, Michael DeFilippo, James Usevitch et al.</p>
+      <p class="abstract">Collision avoidance in heterogeneous fleets of uncrewed vessels is challenging because the decision-making processes and controllers often differ between platforms, and it is further complicated by the limitations on sharing trajectories and control values in real-time. This paper presents a pragmat...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-118">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-16</span><a href="https://arxiv.org/abs/2601.11335v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Distributed Control Barrier Functions for Safe Multi-Vehicle Navigation in Heterogeneous USV Fleets</h3>
+      <p class="authors">Tyler Paine, Brendan Long, Jeremy Wenger, Michael DeFilippo, James Usevitch et al.</p>
+      <p class="abstract">Collision avoidance in heterogeneous fleets of uncrewed vessels is challenging because the decision-making processes and controllers often differ between platforms, and it is further complicated by the limitations on sharing trajectories and control values in real-time. This paper presents a pragmat...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-119">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-16</span><a href="https://arxiv.org/abs/2601.11335v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Distributed Control Barrier Functions for Safe Multi-Vehicle Navigation in Heterogeneous USV Fleets</h3>
+      <p class="authors">Tyler Paine, Brendan Long, Jeremy Wenger, Michael DeFilippo, James Usevitch et al.</p>
+      <p class="abstract">Collision avoidance in heterogeneous fleets of uncrewed vessels is challenging because the decision-making processes and controllers often differ between platforms, and it is further complicated by the limitations on sharing trajectories and control values in real-time. This paper presents a pragmat...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-120">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-16</span><a href="https://arxiv.org/abs/2601.11335v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Distributed Control Barrier Functions for Safe Multi-Vehicle Navigation in Heterogeneous USV Fleets</h3>
+      <p class="authors">Tyler Paine, Brendan Long, Jeremy Wenger, Michael DeFilippo, James Usevitch et al.</p>
+      <p class="abstract">Collision avoidance in heterogeneous fleets of uncrewed vessels is challenging because the decision-making processes and controllers often differ between platforms, and it is further complicated by the limitations on sharing trajectories and control values in real-time. This paper presents a pragmat...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-121">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-16</span><a href="https://arxiv.org/abs/2601.11335v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Distributed Control Barrier Functions for Safe Multi-Vehicle Navigation in Heterogeneous USV Fleets</h3>
+      <p class="authors">Tyler Paine, Brendan Long, Jeremy Wenger, Michael DeFilippo, James Usevitch et al.</p>
+      <p class="abstract">Collision avoidance in heterogeneous fleets of uncrewed vessels is challenging because the decision-making processes and controllers often differ between platforms, and it is further complicated by the limitations on sharing trajectories and control values in real-time. This paper presents a pragmat...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-122">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-16</span><a href="https://arxiv.org/abs/2601.11335v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Distributed Control Barrier Functions for Safe Multi-Vehicle Navigation in Heterogeneous USV Fleets</h3>
+      <p class="authors">Tyler Paine, Brendan Long, Jeremy Wenger, Michael DeFilippo, James Usevitch et al.</p>
+      <p class="abstract">Collision avoidance in heterogeneous fleets of uncrewed vessels is challenging because the decision-making processes and controllers often differ between platforms, and it is further complicated by the limitations on sharing trajectories and control values in real-time. This paper presents a pragmat...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-123">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-15</span><a href="https://arxiv.org/abs/2601.10233v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control</h3>
+      <p class="authors">Yifan Xue, Ze Zhang, Knut Åkesson, Nadia Figueroa</p>
+      <p class="abstract">This work addresses the challenge of safe and efficient mobile robot navigation in complex dynamic environments with concave moving obstacles. Reactive safe controllers like Control Barrier Functions (CBFs) design obstacle avoidance strategies based only on the current states of the obstacles, riski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-124">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-15</span><a href="https://arxiv.org/abs/2601.10233v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control</h3>
+      <p class="authors">Yifan Xue, Ze Zhang, Knut Åkesson, Nadia Figueroa</p>
+      <p class="abstract">This work addresses the challenge of safe and efficient mobile robot navigation in complex dynamic environments with concave moving obstacles. Reactive safe controllers like Control Barrier Functions (CBFs) design obstacle avoidance strategies based only on the current states of the obstacles, riski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-125">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-15</span><a href="https://arxiv.org/abs/2601.10233v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control</h3>
+      <p class="authors">Yifan Xue, Ze Zhang, Knut Åkesson, Nadia Figueroa</p>
+      <p class="abstract">This work addresses the challenge of safe and efficient mobile robot navigation in complex dynamic environments with concave moving obstacles. Reactive safe controllers like Control Barrier Functions (CBFs) design obstacle avoidance strategies based only on the current states of the obstacles, riski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-126">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-15</span><a href="https://arxiv.org/abs/2601.10233v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control</h3>
+      <p class="authors">Yifan Xue, Ze Zhang, Knut Åkesson, Nadia Figueroa</p>
+      <p class="abstract">This work addresses the challenge of safe and efficient mobile robot navigation in complex dynamic environments with concave moving obstacles. Reactive safe controllers like Control Barrier Functions (CBFs) design obstacle avoidance strategies based only on the current states of the obstacles, riski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-127">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-12</span><a href="https://arxiv.org/abs/2601.07715v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Navigation under Uncertain Obstacle Dynamics using Control Barrier Functions and Constrained Convex Generators</h3>
+      <p class="authors">Hugo Matias, Daniel Silvestre</p>
+      <p class="abstract">This paper presents a sampled-data framework for the safe navigation of controlled agents in environments cluttered with obstacles governed by uncertain linear dynamics. Collision-free motion is achieved by combining Control Barrier Function (CBF)-based safety filtering with set-valued state estimat...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-128">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-12</span><a href="https://arxiv.org/abs/2601.07715v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Navigation under Uncertain Obstacle Dynamics using Control Barrier Functions and Constrained Convex Generators</h3>
+      <p class="authors">Hugo Matias, Daniel Silvestre</p>
+      <p class="abstract">This paper presents a sampled-data framework for the safe navigation of controlled agents in environments cluttered with obstacles governed by uncertain linear dynamics. Collision-free motion is achieved by combining Control Barrier Function (CBF)-based safety filtering with set-valued state estimat...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-129">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-10</span><a href="https://arxiv.org/abs/2601.06540v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Self-Organizing Dual-Buffer Adaptive Clustering Experience Replay (SODASER) for Safe Reinforcement Learning in Optimal Control</h3>
+      <p class="authors">Roya Khalili Amirabadi, Mohsen Jalaeian Farimani, Omid Solaymani Fard</p>
+      <p class="abstract">This paper proposes a novel reinforcement learning framework, named Self-Organizing Dual-buffer Adaptive Clustering Experience Replay (SODACER), designed to achieve safe and scalable optimal control of nonlinear systems. The proposed SODACER mechanism consisting of a Fast-Buffer for rapid adaptation...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-130">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-10</span><a href="https://arxiv.org/abs/2601.06540v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Self-Organizing Dual-Buffer Adaptive Clustering Experience Replay (SODASER) for Safe Reinforcement Learning in Optimal Control</h3>
+      <p class="authors">Roya Khalili Amirabadi, Mohsen Jalaeian Farimani, Omid Solaymani Fard</p>
+      <p class="abstract">This paper proposes a novel reinforcement learning framework, named Self-Organizing Dual-buffer Adaptive Clustering Experience Replay (SODACER), designed to achieve safe and scalable optimal control of nonlinear systems. The proposed SODACER mechanism consisting of a Fast-Buffer for rapid adaptation...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-131">    <div class="card">
+      <div class="card-header"><span class="badge date">2026-01-10</span><a href="https://arxiv.org/abs/2601.06540v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Self-Organizing Dual-Buffer Adaptive Clustering Experience Replay (SODASER) for Safe Reinforcement Learning in Optimal Control</h3>
+      <p class="authors">Roya Khalili Amirabadi, Mohsen Jalaeian Farimani, Omid Solaymani Fard</p>
+      <p class="abstract">This paper proposes a novel reinforcement learning framework, named Self-Organizing Dual-buffer Adaptive Clustering Experience Replay (SODACER), designed to achieve safe and scalable optimal control of nonlinear systems. The proposed SODACER mechanism consisting of a Fast-Buffer for rapid adaptation...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-132">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-30</span><a href="https://arxiv.org/abs/2512.24493v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Energy-Aware Bayesian Control Barrier Functions for Physics-Informed Gaussian Process Dynamics</h3>
+      <p class="authors">Chi Ho Leung, Philip E. Paré</p>
+      <p class="abstract">We study safe control for dynamical systems whose continuous-time dynamics are learned with Gaussian processes (GPs), focusing on mechanical and port-Hamiltonian systems where safety is naturally expressed via energy constraints. The availability of a GP Hamiltonian posterior naturally raises the qu...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-133">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-30</span><a href="https://arxiv.org/abs/2512.24281v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Sliding Mode Control for Marine Vessels Using High-Order Control Barrier Functions and Fast Projection</h3>
+      <p class="authors">Spyridon Syntakas, Kostas Vlachos</p>
+      <p class="abstract">This paper presents a novel safe control framework that integrates Sliding Mode Control (SMC), High-Order Control Barrier Functions (HOCBFs) with state-dependent adaptiveness and a lightweight projection for collision-free navigation of an over-actuated 3-DOF marine surface vessel subjected to stron...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-134">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-30</span><a href="https://arxiv.org/abs/2512.24281v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Sliding Mode Control for Marine Vessels Using High-Order Control Barrier Functions and Fast Projection</h3>
+      <p class="authors">Spyridon Syntakas, Kostas Vlachos</p>
+      <p class="abstract">This paper presents a novel safe control framework that integrates Sliding Mode Control (SMC), High-Order Control Barrier Functions (HOCBFs) with state-dependent adaptiveness and a lightweight projection for collision-free navigation of an over-actuated 3-DOF marine surface vessel subjected to stron...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-135">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-19</span><a href="https://arxiv.org/abs/2512.17249v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Uncertainty-Aware 3D UAV Tracking Using Single-Anchor UWB Measurements</h3>
+      <p class="authors">Yuqi Ping, Junwei Wu, Bofeng Zheng, Fan Liu, Tianhao Liang et al.</p>
+      <p class="abstract">In this letter, we present an uncertainty-aware single-anchor Ultra-Wideband (UWB)-based 3D tracking framework. Specifically, a mobile Unmanned Aerial Vehicle (UAV) maintains a desired standoff distance to a moving target using range and 3D bearing measurements from a multi-antenna UWB anchor rigidl...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-136">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-19</span><a href="https://arxiv.org/abs/2512.17249v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Uncertainty-Aware 3D UAV Tracking Using Single-Anchor UWB Measurements</h3>
+      <p class="authors">Yuqi Ping, Junwei Wu, Bofeng Zheng, Fan Liu, Tianhao Liang et al.</p>
+      <p class="abstract">In this letter, we present an uncertainty-aware single-anchor Ultra-Wideband (UWB)-based 3D tracking framework. Specifically, a mobile Unmanned Aerial Vehicle (UAV) maintains a desired standoff distance to a moving target using range and 3D bearing measurements from a multi-antenna UWB anchor rigidl...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-137">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-19</span><a href="https://arxiv.org/abs/2512.17249v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Uncertainty-Aware 3D UAV Tracking Using Single-Anchor UWB Measurements</h3>
+      <p class="authors">Yuqi Ping, Junwei Wu, Bofeng Zheng, Fan Liu, Tianhao Liang et al.</p>
+      <p class="abstract">In this letter, we present an uncertainty-aware single-anchor Ultra-Wideband (UWB)-based 3D tracking framework. Specifically, a mobile Unmanned Aerial Vehicle (UAV) maintains a desired standoff distance to a moving target using range and 3D bearing measurements from a multi-antenna UWB anchor rigidl...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-138">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-19</span><a href="https://arxiv.org/abs/2512.17249v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Uncertainty-Aware 3D UAV Tracking Using Single-Anchor UWB Measurements</h3>
+      <p class="authors">Yuqi Ping, Junwei Wu, Bofeng Zheng, Fan Liu, Tianhao Liang et al.</p>
+      <p class="abstract">In this letter, we present an uncertainty-aware single-anchor Ultra-Wideband (UWB)-based 3D tracking framework. Specifically, a mobile Unmanned Aerial Vehicle (UAV) maintains a desired standoff distance to a moving target using range and 3D bearing measurements from a multi-antenna UWB anchor rigidl...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-139">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-19</span><a href="https://arxiv.org/abs/2512.17249v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Uncertainty-Aware 3D UAV Tracking Using Single-Anchor UWB Measurements</h3>
+      <p class="authors">Yuqi Ping, Junwei Wu, Bofeng Zheng, Fan Liu, Tianhao Liang et al.</p>
+      <p class="abstract">In this letter, we present an uncertainty-aware single-anchor Ultra-Wideband (UWB)-based 3D tracking framework. Specifically, a mobile Unmanned Aerial Vehicle (UAV) maintains a desired standoff distance to a moving target using range and 3D bearing measurements from a multi-antenna UWB anchor rigidl...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-140">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-19</span><a href="https://arxiv.org/abs/2512.17249v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Uncertainty-Aware 3D UAV Tracking Using Single-Anchor UWB Measurements</h3>
+      <p class="authors">Yuqi Ping, Junwei Wu, Bofeng Zheng, Fan Liu, Tianhao Liang et al.</p>
+      <p class="abstract">In this letter, we present an uncertainty-aware single-anchor Ultra-Wideband (UWB)-based 3D tracking framework. Specifically, a mobile Unmanned Aerial Vehicle (UAV) maintains a desired standoff distance to a moving target using range and 3D bearing measurements from a multi-antenna UWB anchor rigidl...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-141">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-18</span><a href="https://arxiv.org/abs/2512.17057v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Perception-Limited Smooth Safety Filtering</h3>
+      <p class="authors">Lyes Smaili, Soulaimane Berkane</p>
+      <p class="abstract">This paper develops a smooth safety-filtering framework for nonlinear control-affine systems under limited perception. Classical Control Barrier Function (CBF) filters assume global availability of the safety function - its value and gradient must be known everywhere - an assumption incompatible wit...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-142">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-18</span><a href="https://arxiv.org/abs/2512.17057v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Perception-Limited Smooth Safety Filtering</h3>
+      <p class="authors">Lyes Smaili, Soulaimane Berkane</p>
+      <p class="abstract">This paper develops a smooth safety-filtering framework for nonlinear control-affine systems under limited perception. Classical Control Barrier Function (CBF) filters assume global availability of the safety function - its value and gradient must be known everywhere - an assumption incompatible wit...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-143">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-15</span><a href="https://arxiv.org/abs/2512.13344v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Neural Control Barrier Functions for Signal Temporal Logic Specifications with Input Constraints</h3>
+      <p class="authors">Vaishnavi Jagabathula, Pushpak Jagtap</p>
+      <p class="abstract">Signal Temporal Logic (STL) provides a powerful framework to describe complex tasks involving temporal and logical behavior in dynamical systems. In this work, we address the problem of synthesizing controllers for continuous-time systems under STL specifications with input constraints. We propose a...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-144">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-15</span><a href="https://arxiv.org/abs/2512.13344v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Neural Control Barrier Functions for Signal Temporal Logic Specifications with Input Constraints</h3>
+      <p class="authors">Vaishnavi Jagabathula, Pushpak Jagtap</p>
+      <p class="abstract">Signal Temporal Logic (STL) provides a powerful framework to describe complex tasks involving temporal and logical behavior in dynamical systems. In this work, we address the problem of synthesizing controllers for continuous-time systems under STL specifications with input constraints. We propose a...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-145">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-14</span><a href="https://arxiv.org/abs/2512.12776v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>High Order Control Lyapunov Function - Control Barrier Function - Quadratic Programming Based Autonomous Driving Controller for Bicyclist Safety</h3>
+      <p class="authors">Haochong Chen, Xincheng Cao, Levent Guvenc, Bilin Aksun-Guvenc</p>
+      <p class="abstract">Ensuring the safety of Vulnerable Road Users (VRUs) is a critical challenge in the development of advanced autonomous driving systems in smart cities. Among vulnerable road users, bicyclists present unique characteristics that make their safety both critical and also manageable. Vehicles often trave...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-146">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-14</span><a href="https://arxiv.org/abs/2512.12776v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>High Order Control Lyapunov Function - Control Barrier Function - Quadratic Programming Based Autonomous Driving Controller for Bicyclist Safety</h3>
+      <p class="authors">Haochong Chen, Xincheng Cao, Levent Guvenc, Bilin Aksun-Guvenc</p>
+      <p class="abstract">Ensuring the safety of Vulnerable Road Users (VRUs) is a critical challenge in the development of advanced autonomous driving systems in smart cities. Among vulnerable road users, bicyclists present unique characteristics that make their safety both critical and also manageable. Vehicles often trave...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-147">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-14</span><a href="https://arxiv.org/abs/2512.12776v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>High Order Control Lyapunov Function - Control Barrier Function - Quadratic Programming Based Autonomous Driving Controller for Bicyclist Safety</h3>
+      <p class="authors">Haochong Chen, Xincheng Cao, Levent Guvenc, Bilin Aksun-Guvenc</p>
+      <p class="abstract">Ensuring the safety of Vulnerable Road Users (VRUs) is a critical challenge in the development of advanced autonomous driving systems in smart cities. Among vulnerable road users, bicyclists present unique characteristics that make their safety both critical and also manageable. Vehicles often trave...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-148">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-14</span><a href="https://arxiv.org/abs/2512.12776v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>High Order Control Lyapunov Function - Control Barrier Function - Quadratic Programming Based Autonomous Driving Controller for Bicyclist Safety</h3>
+      <p class="authors">Haochong Chen, Xincheng Cao, Levent Guvenc, Bilin Aksun-Guvenc</p>
+      <p class="abstract">Ensuring the safety of Vulnerable Road Users (VRUs) is a critical challenge in the development of advanced autonomous driving systems in smart cities. Among vulnerable road users, bicyclists present unique characteristics that make their safety both critical and also manageable. Vehicles often trave...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-149">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.11125v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Design and Experimental Validation of Closed-Form CBF-Based Safe Control for Stewart Platform Under Multiple Constraints</h3>
+      <p class="authors">Benedictus C. G. Cinun, Tua A. Tamba, Immanuel R. Santjoko, Xiaofeng Wang, Michael A. Gunarso et al.</p>
+      <p class="abstract">This letter presents a closed-form solution of Control Barrier Function (CBF) framework for enforcing safety constraints on a Stewart robotic platform. The proposed method simultaneously handles multiple position and velocity constraints through an explicit closed-form control law, eliminating the n...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-150">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.11125v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Design and Experimental Validation of Closed-Form CBF-Based Safe Control for Stewart Platform Under Multiple Constraints</h3>
+      <p class="authors">Benedictus C. G. Cinun, Tua A. Tamba, Immanuel R. Santjoko, Xiaofeng Wang, Michael A. Gunarso et al.</p>
+      <p class="abstract">This letter presents a closed-form solution of Control Barrier Function (CBF) framework for enforcing safety constraints on a Stewart robotic platform. The proposed method simultaneously handles multiple position and velocity constraints through an explicit closed-form control law, eliminating the n...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-151">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.11125v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Design and Experimental Validation of Closed-Form CBF-Based Safe Control for Stewart Platform Under Multiple Constraints</h3>
+      <p class="authors">Benedictus C. G. Cinun, Tua A. Tamba, Immanuel R. Santjoko, Xiaofeng Wang, Michael A. Gunarso et al.</p>
+      <p class="abstract">This letter presents a closed-form solution of Control Barrier Function (CBF) framework for enforcing safety constraints on a Stewart robotic platform. The proposed method simultaneously handles multiple position and velocity constraints through an explicit closed-form control law, eliminating the n...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-152">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.11125v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Design and Experimental Validation of Closed-Form CBF-Based Safe Control for Stewart Platform Under Multiple Constraints</h3>
+      <p class="authors">Benedictus C. G. Cinun, Tua A. Tamba, Immanuel R. Santjoko, Xiaofeng Wang, Michael A. Gunarso et al.</p>
+      <p class="abstract">This letter presents a closed-form solution of Control Barrier Function (CBF) framework for enforcing safety constraints on a Stewart robotic platform. The proposed method simultaneously handles multiple position and velocity constraints through an explicit closed-form control law, eliminating the n...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-153">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.11125v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Design and Experimental Validation of Closed-Form CBF-Based Safe Control for Stewart Platform Under Multiple Constraints</h3>
+      <p class="authors">Benedictus C. G. Cinun, Tua A. Tamba, Immanuel R. Santjoko, Xiaofeng Wang, Michael A. Gunarso et al.</p>
+      <p class="abstract">This letter presents a closed-form solution of Control Barrier Function (CBF) framework for enforcing safety constraints on a Stewart robotic platform. The proposed method simultaneously handles multiple position and velocity constraints through an explicit closed-form control law, eliminating the n...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-154">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.11125v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Design and Experimental Validation of Closed-Form CBF-Based Safe Control for Stewart Platform Under Multiple Constraints</h3>
+      <p class="authors">Benedictus C. G. Cinun, Tua A. Tamba, Immanuel R. Santjoko, Xiaofeng Wang, Michael A. Gunarso et al.</p>
+      <p class="abstract">This letter presents a closed-form solution of Control Barrier Function (CBF) framework for enforcing safety constraints on a Stewart robotic platform. The proposed method simultaneously handles multiple position and velocity constraints through an explicit closed-form control law, eliminating the n...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-155">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.10822v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>V-OCBF: Learning Safety Filters from Offline Data via Value-Guided Offline Control Barrier Functions</h3>
+      <p class="authors">Mumuksh Tayal, Manan Tayal, Aditya Singh, Shishir Kolathaya, Ravi Prakash</p>
+      <p class="abstract">Ensuring safety in autonomous systems requires controllers that satisfy hard, state-wise constraints without relying on online interaction. While existing Safe Offline RL methods typically enforce soft expected-cost constraints, they do not guarantee forward invariance. Conversely, Control Barrier F...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-156">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.10822v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>V-OCBF: Learning Safety Filters from Offline Data via Value-Guided Offline Control Barrier Functions</h3>
+      <p class="authors">Mumuksh Tayal, Manan Tayal, Aditya Singh, Shishir Kolathaya, Ravi Prakash</p>
+      <p class="abstract">Ensuring safety in autonomous systems requires controllers that satisfy hard, state-wise constraints without relying on online interaction. While existing Safe Offline RL methods typically enforce soft expected-cost constraints, they do not guarantee forward invariance. Conversely, Control Barrier F...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-157">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.10822v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>V-OCBF: Learning Safety Filters from Offline Data via Value-Guided Offline Control Barrier Functions</h3>
+      <p class="authors">Mumuksh Tayal, Manan Tayal, Aditya Singh, Shishir Kolathaya, Ravi Prakash</p>
+      <p class="abstract">Ensuring safety in autonomous systems requires controllers that satisfy hard, state-wise constraints without relying on online interaction. While existing Safe Offline RL methods typically enforce soft expected-cost constraints, they do not guarantee forward invariance. Conversely, Control Barrier F...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-158">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.10822v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>V-OCBF: Learning Safety Filters from Offline Data via Value-Guided Offline Control Barrier Functions</h3>
+      <p class="authors">Mumuksh Tayal, Manan Tayal, Aditya Singh, Shishir Kolathaya, Ravi Prakash</p>
+      <p class="abstract">Ensuring safety in autonomous systems requires controllers that satisfy hard, state-wise constraints without relying on online interaction. While existing Safe Offline RL methods typically enforce soft expected-cost constraints, they do not guarantee forward invariance. Conversely, Control Barrier F...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-159">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.10822v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>V-OCBF: Learning Safety Filters from Offline Data via Value-Guided Offline Control Barrier Functions</h3>
+      <p class="authors">Mumuksh Tayal, Manan Tayal, Aditya Singh, Shishir Kolathaya, Ravi Prakash</p>
+      <p class="abstract">Ensuring safety in autonomous systems requires controllers that satisfy hard, state-wise constraints without relying on online interaction. While existing Safe Offline RL methods typically enforce soft expected-cost constraints, they do not guarantee forward invariance. Conversely, Control Barrier F...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-160">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.10392v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Collision-Aware Density-Driven Control of Multi-Agent Systems via Control Barrier Functions</h3>
+      <p class="authors">Sungjun Seo, Kooktae Lee</p>
+      <p class="abstract">This paper tackles the problem of safe and efficient area coverage using a multi-agent system operating in environments with obstacles. Applications such as environmental monitoring and search and rescue require robot swarms to cover large domains under resource constraints, making both coverage eff...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-161">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-11</span><a href="https://arxiv.org/abs/2512.10392v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Collision-Aware Density-Driven Control of Multi-Agent Systems via Control Barrier Functions</h3>
+      <p class="authors">Sungjun Seo, Kooktae Lee</p>
+      <p class="abstract">This paper tackles the problem of safe and efficient area coverage using a multi-agent system operating in environments with obstacles. Applications such as environmental monitoring and search and rescue require robot swarms to cover large domains under resource constraints, making both coverage eff...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-162">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.10118v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Explicit Control Barrier Function-based Safety Filters and their Resource-Aware Computation</h3>
+      <p class="authors">Pol Mestres, Shima Sadat Mousavi, Pio Ong, Lizhi Yang, Ersin Das et al.</p>
+      <p class="abstract">This paper studies the efficient implementation of safety filters that are designed using control barrier functions (CBFs), which minimally modify a nominal controller to render it safe with respect to a prescribed set of states. Although CBF-based safety filters are often implemented by solving a q...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-163">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.10118v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Explicit Control Barrier Function-based Safety Filters and their Resource-Aware Computation</h3>
+      <p class="authors">Pol Mestres, Shima Sadat Mousavi, Pio Ong, Lizhi Yang, Ersin Das et al.</p>
+      <p class="abstract">This paper studies the efficient implementation of safety filters that are designed using control barrier functions (CBFs), which minimally modify a nominal controller to render it safe with respect to a prescribed set of states. Although CBF-based safety filters are often implemented by solving a q...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-164">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.10118v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Explicit Control Barrier Function-based Safety Filters and their Resource-Aware Computation</h3>
+      <p class="authors">Pol Mestres, Shima Sadat Mousavi, Pio Ong, Lizhi Yang, Ersin Das et al.</p>
+      <p class="abstract">This paper studies the efficient implementation of safety filters that are designed using control barrier functions (CBFs), which minimally modify a nominal controller to render it safe with respect to a prescribed set of states. Although CBF-based safety filters are often implemented by solving a q...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-165">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.10118v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Explicit Control Barrier Function-based Safety Filters and their Resource-Aware Computation</h3>
+      <p class="authors">Pol Mestres, Shima Sadat Mousavi, Pio Ong, Lizhi Yang, Ersin Das et al.</p>
+      <p class="abstract">This paper studies the efficient implementation of safety filters that are designed using control barrier functions (CBFs), which minimally modify a nominal controller to render it safe with respect to a prescribed set of states. Although CBF-based safety filters are often implemented by solving a q...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-166">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.11908v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Learning for Contact-Rich Robot Tasks: A Survey from Classical Learning-Based Methods to Safe Foundation Models</h3>
+      <p class="authors">Heng Zhang, Rui Dai, Gokhan Solak, Pokuang Zhou, Yu She et al.</p>
+      <p class="abstract">Contact-rich tasks pose significant challenges for robotic systems due to inherent uncertainty, complex dynamics, and the high risk of damage during interaction. Recent advances in learning-based control have shown great potential in enabling robots to acquire and generalize complex manipulation ski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-167">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.11908v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Learning for Contact-Rich Robot Tasks: A Survey from Classical Learning-Based Methods to Safe Foundation Models</h3>
+      <p class="authors">Heng Zhang, Rui Dai, Gokhan Solak, Pokuang Zhou, Yu She et al.</p>
+      <p class="abstract">Contact-rich tasks pose significant challenges for robotic systems due to inherent uncertainty, complex dynamics, and the high risk of damage during interaction. Recent advances in learning-based control have shown great potential in enabling robots to acquire and generalize complex manipulation ski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-168">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.11908v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Learning for Contact-Rich Robot Tasks: A Survey from Classical Learning-Based Methods to Safe Foundation Models</h3>
+      <p class="authors">Heng Zhang, Rui Dai, Gokhan Solak, Pokuang Zhou, Yu She et al.</p>
+      <p class="abstract">Contact-rich tasks pose significant challenges for robotic systems due to inherent uncertainty, complex dynamics, and the high risk of damage during interaction. Recent advances in learning-based control have shown great potential in enabling robots to acquire and generalize complex manipulation ski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-169">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.11908v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Learning for Contact-Rich Robot Tasks: A Survey from Classical Learning-Based Methods to Safe Foundation Models</h3>
+      <p class="authors">Heng Zhang, Rui Dai, Gokhan Solak, Pokuang Zhou, Yu She et al.</p>
+      <p class="abstract">Contact-rich tasks pose significant challenges for robotic systems due to inherent uncertainty, complex dynamics, and the high risk of damage during interaction. Recent advances in learning-based control have shown great potential in enabling robots to acquire and generalize complex manipulation ski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-170">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.11908v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Learning for Contact-Rich Robot Tasks: A Survey from Classical Learning-Based Methods to Safe Foundation Models</h3>
+      <p class="authors">Heng Zhang, Rui Dai, Gokhan Solak, Pokuang Zhou, Yu She et al.</p>
+      <p class="abstract">Contact-rich tasks pose significant challenges for robotic systems due to inherent uncertainty, complex dynamics, and the high risk of damage during interaction. Recent advances in learning-based control have shown great potential in enabling robots to acquire and generalize complex manipulation ski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-171">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-10</span><a href="https://arxiv.org/abs/2512.11908v2" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Safe Learning for Contact-Rich Robot Tasks: A Survey from Classical Learning-Based Methods to Safe Foundation Models</h3>
+      <p class="authors">Heng Zhang, Rui Dai, Gokhan Solak, Pokuang Zhou, Yu She et al.</p>
+      <p class="abstract">Contact-rich tasks pose significant challenges for robotic systems due to inherent uncertainty, complex dynamics, and the high risk of damage during interaction. Recent advances in learning-based control have shown great potential in enabling robots to acquire and generalize complex manipulation ski...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-172">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-09</span><a href="https://arxiv.org/abs/2512.09954v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Cross-Layer Isochronous Diffusion Protocol (CIDP): A Rigorous Information-Theoretic and Control-Theoretic Framework for Sovereign Tactical Anonymity</h3>
+      <p class="authors">Pravin G</p>
+      <p class="abstract">Next-generation tactical networks face a critical Anonymity Trilemma: it is impossible to simultaneously achieve strong anonymity, low latency (isochrony), and low bandwidth overhead under a global passive adversary. CIDP breaks this deadlock by injecting physical-layer entropy via rapid antenna sid...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-173">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-09</span><a href="https://arxiv.org/abs/2512.11891v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>VLSA: Vision-Language-Action Models with Plug-and-Play Safety Constraint Layer</h3>
+      <p class="authors">Songqiao Hu, Zeyi Liu, Shuang Liu, Jun Cen, Zihan Meng et al.</p>
+      <p class="abstract">Vision-Language-Action (VLA) models have demonstrated remarkable capabilities in generalizing across diverse robotic manipulation tasks. However, deploying these models in unstructured environments remains challenging due to the critical need for simultaneous task compliance and safety assurance, pa...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-174">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-09</span><a href="https://arxiv.org/abs/2512.11891v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>VLSA: Vision-Language-Action Models with Plug-and-Play Safety Constraint Layer</h3>
+      <p class="authors">Songqiao Hu, Zeyi Liu, Shuang Liu, Jun Cen, Zihan Meng et al.</p>
+      <p class="abstract">Vision-Language-Action (VLA) models have demonstrated remarkable capabilities in generalizing across diverse robotic manipulation tasks. However, deploying these models in unstructured environments remains challenging due to the critical need for simultaneous task compliance and safety assurance, pa...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-175">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-09</span><a href="https://arxiv.org/abs/2512.11891v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>VLSA: Vision-Language-Action Models with Plug-and-Play Safety Constraint Layer</h3>
+      <p class="authors">Songqiao Hu, Zeyi Liu, Shuang Liu, Jun Cen, Zihan Meng et al.</p>
+      <p class="abstract">Vision-Language-Action (VLA) models have demonstrated remarkable capabilities in generalizing across diverse robotic manipulation tasks. However, deploying these models in unstructured environments remains challenging due to the critical need for simultaneous task compliance and safety assurance, pa...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-176">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-09</span><a href="https://arxiv.org/abs/2512.11891v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>VLSA: Vision-Language-Action Models with Plug-and-Play Safety Constraint Layer</h3>
+      <p class="authors">Songqiao Hu, Zeyi Liu, Shuang Liu, Jun Cen, Zihan Meng et al.</p>
+      <p class="abstract">Vision-Language-Action (VLA) models have demonstrated remarkable capabilities in generalizing across diverse robotic manipulation tasks. However, deploying these models in unstructured environments remains challenging due to the critical need for simultaneous task compliance and safety assurance, pa...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-177">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-09</span><a href="https://arxiv.org/abs/2512.11891v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>VLSA: Vision-Language-Action Models with Plug-and-Play Safety Constraint Layer</h3>
+      <p class="authors">Songqiao Hu, Zeyi Liu, Shuang Liu, Jun Cen, Zihan Meng et al.</p>
+      <p class="abstract">Vision-Language-Action (VLA) models have demonstrated remarkable capabilities in generalizing across diverse robotic manipulation tasks. However, deploying these models in unstructured environments remains challenging due to the critical need for simultaneous task compliance and safety assurance, pa...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-178">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-09</span><a href="https://arxiv.org/abs/2512.11891v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>VLSA: Vision-Language-Action Models with Plug-and-Play Safety Constraint Layer</h3>
+      <p class="authors">Songqiao Hu, Zeyi Liu, Shuang Liu, Jun Cen, Zihan Meng et al.</p>
+      <p class="abstract">Vision-Language-Action (VLA) models have demonstrated remarkable capabilities in generalizing across diverse robotic manipulation tasks. However, deploying these models in unstructured environments remains challenging due to the critical need for simultaneous task compliance and safety assurance, pa...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-179">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-09</span><a href="https://arxiv.org/abs/2512.08607v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Decoupled Design of Time-Varying Control Barrier Functions via Equivariances</h3>
+      <p class="authors">Adrian Wiltz, Dimos V. Dimarogonas</p>
+      <p class="abstract">This article presents a systematic method for designing time-varying Control Barrier Functions (CBF) composed of a time-invariant component and multiple time-dependent components, leveraging structural properties of the system dynamics. The method involves the construction of a specific class of tim...</p>
+    </div></div>
+<div class="author-panel" id="author-panel-180">    <div class="card">
+      <div class="card-header"><span class="badge date">2025-12-09</span><a href="https://arxiv.org/abs/2512.08607v1" target="_blank" class="arxiv-link">arXiv →</a></div>
+      <h3>Decoupled Design of Time-Varying Control Barrier Functions via Equivariances</h3>
+      <p class="authors">Adrian Wiltz, Dimos V. Dimarogonas</p>
+      <p class="abstract">This article presents a systematic method for designing time-varying Control Barrier Functions (CBF) composed of a time-invariant component and multiple time-dependent components, leveraging structural properties of the system dynamics. The method involves the construction of a specific class of tim...</p>
+    </div></div></div>
+  </div>
+</div>
 <footer>Auto-updated by GitHub Actions · <a href="https://github.com/QianYuan1437/ArxivCBF">Source</a></footer>
 <script>
-  function show(id){
+  function show(id,btn){
     document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    event.target.classList.add('active');
+    btn.classList.add('active');
   }
+  function showAuthor(i){
+    document.querySelectorAll('.author-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.author-item').forEach(a=>a.classList.remove('active'));
+    document.getElementById('author-panel-'+i).classList.add('active');
+    document.querySelectorAll('.author-item')[i].classList.add('active');
+  }
+  // 默认显示第一位作者
+  if(document.querySelector('.author-item')) showAuthor(0);
 </script>
 </body>
 </html>
