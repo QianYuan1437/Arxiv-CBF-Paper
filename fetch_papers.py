@@ -10,27 +10,67 @@ SEMANTIC_SCHOLAR_API = "https://api.semanticscholar.org/graph/v1/paper/search"
 ARXIV_API = "http://export.arxiv.org/api/query"
 
 
+def _load_previous_high_citation(path="docs/papers_data.json"):
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data.get("high_citation", []) or []
+    except Exception:
+        return []
+
+
+def _semantic_scholar_get(params, retries=4, timeout=30):
+    # Retry for transient API/network issues to avoid empty sections on single-run failures.
+    for attempt in range(retries):
+        try:
+            resp = requests.get(SEMANTIC_SCHOLAR_API, params=params, timeout=timeout)
+        except requests.RequestException:
+            resp = None
+
+        if resp is not None and resp.status_code == 200:
+            return resp
+
+        if attempt < retries - 1:
+            time.sleep(1.5 * (attempt + 1))
+    return None
+
+
 def fetch_high_citation_papers(min_citations=100, max_results=200):
     papers = []
-    offset = 0
+    seen = set()
     limit = 100
-    while len(papers) < max_results:
-        params = {
-            "query": "Control Barrier Function CBF",
-            "fields": "title,authors,year,citationCount,externalIds,publicationDate,abstract",
-            "limit": limit,
-            "offset": offset,
-        }
-        resp = requests.get(SEMANTIC_SCHOLAR_API, params=params, timeout=30)
-        if resp.status_code != 200:
-            break
-        data = resp.json()
-        items = data.get("data", [])
-        if not items:
-            break
-        for item in items:
-            if item.get("citationCount", 0) >= min_citations:
+    query_candidates = [
+        "control barrier function",
+        "control barrier function CBF",
+        "\"control barrier functions\"",
+    ]
+
+    for query in query_candidates:
+        offset = 0
+        while len(papers) < max_results:
+            params = {
+                "query": query,
+                "fields": "paperId,title,authors,year,citationCount,externalIds,publicationDate,abstract",
+                "limit": limit,
+                "offset": offset,
+            }
+            resp = _semantic_scholar_get(params)
+            if not resp:
+                break
+            data = resp.json()
+            items = data.get("data", [])
+            if not items:
+                break
+            for item in items:
+                if item.get("citationCount", 0) < min_citations:
+                    continue
                 arxiv_id = (item.get("externalIds") or {}).get("ArXiv")
+                uniq_key = item.get("paperId") or arxiv_id or item.get("title", "")
+                if not uniq_key or uniq_key in seen:
+                    continue
+                seen.add(uniq_key)
                 papers.append({
                     "title": item.get("title", ""),
                     "authors": [a["name"] for a in item.get("authors", [])],
@@ -41,10 +81,15 @@ def fetch_high_citation_papers(min_citations=100, max_results=200):
                     "url": f"https://arxiv.org/abs/{arxiv_id}" if arxiv_id else "",
                     "abstract": (item.get("abstract") or ""),
                 })
-        offset += limit
-        if offset >= data.get("total", 0):
+                if len(papers) >= max_results:
+                    break
+            offset += limit
+            if offset >= data.get("total", 0):
+                break
+            time.sleep(1)
+        if len(papers) >= max_results:
             break
-        time.sleep(1)
+
     papers.sort(key=lambda x: x.get("date") or str(x.get("year", "")), reverse=True)
     return papers
 
@@ -250,8 +295,13 @@ def generate_html(high_citation, latest, authors):
 
 
 if __name__ == "__main__":
+    prev_high_citation = _load_previous_high_citation()
+
     print("Fetching high-citation papers...")
     high_citation = fetch_high_citation_papers()
+    if not high_citation and prev_high_citation:
+        print("Warning: high-citation fetch returned empty; reusing previous high-citation data.")
+        high_citation = prev_high_citation
     print(f"Found {len(high_citation)} high-citation papers")
 
     print("Fetching latest papers...")
