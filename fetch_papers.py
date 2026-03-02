@@ -1,9 +1,7 @@
 import json
 import os
-import re
 import time
 from html import escape
-from collections import Counter
 from collections import defaultdict
 from datetime import datetime, timezone
 from xml.etree import ElementTree as ET
@@ -26,13 +24,16 @@ TOPIC_RULES = [
     ("theory", "Theory", ("lyapunov", "stability", "invariance", "robustness", "certificate", "proof")),
 ]
 
-KEYWORD_STOPWORDS = {
-    "about", "after", "again", "against", "algorithm", "algorithms", "also", "analysis", "approach",
-    "approaches", "article", "based", "between", "class", "classes", "control", "design", "different",
-    "during", "effect", "effects", "framework", "from", "function", "functions", "given", "have",
-    "high", "into", "method", "methods", "model", "models", "more", "nonlinear", "paper", "papers",
-    "problem", "problems", "proposed", "results", "safety", "scheme", "study", "systems", "their",
-    "these", "this", "through", "using", "with", "within",
+ARXIV_SUBJECT_LABELS = {
+    "cs.AI": "Artificial Intelligence",
+    "cs.RO": "Robotics",
+    "cs.LG": "Machine Learning",
+    "cs.SY": "Systems and Control",
+    "cs.CV": "Computer Vision and Pattern Recognition",
+    "eess.SY": "Systems and Control",
+    "math.OC": "Optimization and Control",
+    "math.DS": "Dynamical Systems",
+    "stat.ML": "Machine Learning",
 }
 
 
@@ -44,18 +45,15 @@ def infer_topic(title="", abstract=""):
     return "other", "Other"
 
 
-def extract_keywords_from_paper(paper, per_paper_limit=8):
-    text = f"{paper.get('title', '')} {paper.get('abstract', '')}".lower()
-    tokens = re.findall(r"[a-z][a-z0-9-]{2,}", text)
-    tokens = [
-        t for t in tokens
-        if t not in KEYWORD_STOPWORDS
-        and "cbf" not in t
-        and "barrier" not in t
-        and "control" not in t
-        and len(t) > 2
-    ]
-    return [kw for kw, _ in Counter(tokens).most_common(per_paper_limit)]
+def _subject_display(subject_code):
+    label = ARXIV_SUBJECT_LABELS.get(subject_code)
+    return f"{label} ({subject_code})" if label else subject_code
+
+
+def _normalize_arxiv_id(arxiv_id):
+    if not arxiv_id:
+        return ""
+    return arxiv_id.split("v")[0]
 
 
 def build_keyword_stats(high_citation, latest, top_n=24):
@@ -68,14 +66,18 @@ def build_keyword_stats(high_citation, latest, top_n=24):
         seen.add(key)
         merged.append(p)
 
-    stats = defaultdict(lambda: {"count": 0, "samples": []})
+    stats = defaultdict(lambda: {"count": 0, "papers": []})
     for p in merged:
-        kws = extract_keywords_from_paper(p)
-        title = p.get("title", "")
-        for kw in set(kws):
-            stats[kw]["count"] += 1
-            if len(stats[kw]["samples"]) < 3 and title:
-                stats[kw]["samples"].append(title)
+        subjects = p.get("subjects", []) or []
+        for subject_code in subjects:
+            stats[subject_code]["count"] += 1
+            stats[subject_code]["papers"].append(
+                {
+                    "title": p.get("title", ""),
+                    "url": p.get("url", ""),
+                    "date": p.get("date", ""),
+                }
+            )
 
     sorted_stats = sorted(stats.items(), key=lambda x: (-x[1]["count"], x[0]))[:top_n]
     return sorted_stats, len(merged)
@@ -132,7 +134,56 @@ def _paper_from_semantic_scholar(item):
         "paper_id": paper_id,
         "url": url,
         "abstract": item.get("abstract") or "",
+        "subjects": [],
     }
+
+
+def enrich_arxiv_subjects(papers, batch_size=40):
+    arxiv_ids = []
+    seen = set()
+    for p in papers:
+        aid = _normalize_arxiv_id(p.get("arxiv_id"))
+        if aid and aid not in seen:
+            seen.add(aid)
+            arxiv_ids.append(aid)
+
+    if not arxiv_ids:
+        return
+
+    ns = {
+        "atom": "http://www.w3.org/2005/Atom",
+        "arxiv": "http://arxiv.org/schemas/atom",
+    }
+    subject_map = {}
+    for i in range(0, len(arxiv_ids), batch_size):
+        chunk = arxiv_ids[i:i + batch_size]
+        params = {
+            "id_list": ",".join(chunk),
+            "max_results": len(chunk),
+        }
+        try:
+            resp = requests.get(ARXIV_API, params=params, timeout=30)
+            resp.raise_for_status()
+            root = ET.fromstring(resp.content)
+        except Exception:
+            continue
+
+        for entry in root.findall("atom:entry", ns):
+            pid = _normalize_arxiv_id(entry.find("atom:id", ns).text.split("/abs/")[-1])
+            primary = entry.find("arxiv:primary_category", ns)
+            primary_term = primary.get("term") if primary is not None else ""
+            all_terms = [c.get("term") for c in entry.findall("atom:category", ns) if c.get("term")]
+            terms = []
+            if primary_term:
+                terms.append(primary_term)
+            terms.extend([t for t in all_terms if t != primary_term])
+            subject_map[pid] = terms
+        time.sleep(0.2)
+
+    for p in papers:
+        aid = _normalize_arxiv_id(p.get("arxiv_id"))
+        if aid:
+            p["subjects"] = subject_map.get(aid, p.get("subjects", []))
 
 
 def fetch_latest_papers(max_results=50):
@@ -146,7 +197,10 @@ def fetch_latest_papers(max_results=50):
     resp = requests.get(ARXIV_API, params=params, timeout=30)
     resp.raise_for_status()
 
-    ns = {"atom": "http://www.w3.org/2005/Atom"}
+    ns = {
+        "atom": "http://www.w3.org/2005/Atom",
+        "arxiv": "http://arxiv.org/schemas/atom",
+    }
     root = ET.fromstring(resp.content)
 
     papers = []
@@ -156,6 +210,13 @@ def fetch_latest_papers(max_results=50):
         abstract = entry.find("atom:summary", ns).text.strip()
         if not _is_cbf_related(title, abstract):
             continue
+        primary = entry.find("arxiv:primary_category", ns)
+        primary_term = primary.get("term") if primary is not None else ""
+        all_terms = [c.get("term") for c in entry.findall("atom:category", ns) if c.get("term")]
+        subjects = []
+        if primary_term:
+            subjects.append(primary_term)
+        subjects.extend([t for t in all_terms if t != primary_term])
         papers.append(
             {
                 "title": title,
@@ -164,6 +225,7 @@ def fetch_latest_papers(max_results=50):
                 "arxiv_id": arxiv_id,
                 "url": f"https://arxiv.org/abs/{arxiv_id}",
                 "abstract": abstract,
+                "subjects": subjects,
             }
         )
     return papers
@@ -352,14 +414,30 @@ def generate_html(high_citation, latest, authors):
             f'<div class="section-divider">CBF Related Papers</div>{cbf_section}{other_block}</div>\n'
         )
 
-    keyword_cards_html = "\n".join(
-        f"""    <div class="keyword-card">
-      <div class="keyword-header"><span class="keyword-name">{escape(kw)}</span><span class="keyword-count">{meta["count"]} papers</span></div>
-      <p class="keyword-share">{(meta["count"] / keyword_total_papers * 100):.1f}% coverage</p>
-      <p class="keyword-samples">{escape(" | ".join(meta["samples"]))}</p>
+    keyword_card_blocks = []
+    for kw, meta in keyword_stats:
+        items = []
+        for p in meta["papers"]:
+            title = escape(p.get("title", ""))
+            date = escape(p.get("date", ""))
+            url = p.get("url", "")
+            if url:
+                items.append(f'<li><a href="{escape(url, quote=True)}" target="_blank">{title}</a><span class="paper-date">{date}</span></li>')
+            else:
+                items.append(f'<li><span>{title}</span><span class="paper-date">{date}</span></li>')
+        papers_html = "".join(items)
+        coverage = (meta["count"] / keyword_total_papers * 100) if keyword_total_papers else 0.0
+        keyword_card_blocks.append(
+            f"""    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">{escape(_subject_display(kw))}</span><span class="keyword-count">{meta["count"]} papers</span></div>
+      <p class="keyword-share">{coverage:.1f}% coverage</p>
+      <details class="keyword-details">
+        <summary>Show related papers</summary>
+        <ul class="keyword-paper-list">{papers_html}</ul>
+      </details>
     </div>"""
-        for kw, meta in keyword_stats
-    )
+        )
+    keyword_cards_html = "\n".join(keyword_card_blocks)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -419,7 +497,12 @@ def generate_html(high_citation, latest, authors):
   .keyword-name{{font-weight:700;color:#1a1a2e}}
   .keyword-count{{font-size:.8rem;background:#e8eaf6;color:#283593;border-radius:999px;padding:.15rem .55rem}}
   .keyword-share{{font-size:.82rem;color:#666;margin-bottom:.45rem}}
-  .keyword-samples{{font-size:.82rem;color:#4a5568;line-height:1.45}}
+  .keyword-details summary{{cursor:pointer;color:#1a1a2e;font-size:.85rem;font-weight:600}}
+  .keyword-paper-list{{list-style:none;margin-top:.55rem;display:flex;flex-direction:column;gap:.4rem}}
+  .keyword-paper-list li{{display:flex;justify-content:space-between;gap:.6rem;font-size:.8rem;line-height:1.4}}
+  .keyword-paper-list a{{color:#1565c0;text-decoration:none}}
+  .keyword-paper-list a:hover{{text-decoration:underline}}
+  .paper-date{{color:#666;white-space:nowrap}}
   @media (max-width: 860px) {{
     .author-layout{{flex-direction:column}}
     .author-list{{position:static;width:100%;max-height:none}}
@@ -532,6 +615,10 @@ if __name__ == "__main__":
         print("Warning: high-citation fetch returned empty; reusing previous high-citation data.")
         high_citation = prev_high_citation
     print(f"Found {len(high_citation)} high-citation papers")
+
+    print("Enriching arXiv subject categories...")
+    enrich_arxiv_subjects(latest)
+    enrich_arxiv_subjects(high_citation)
 
     print("Building author data...")
     authors = build_authors(high_citation, latest)
