@@ -142,7 +142,7 @@ def _semantic_scholar_get(params, retries=4, timeout=30):
     return None
 
 
-def _semantic_scholar_get_paper(paper_key, retries=3, timeout=30):
+def _semantic_scholar_get_paper(paper_key, retries=2, timeout=15):
     url = f"{SEMANTIC_SCHOLAR_PAPER_API}/{paper_key}"
     params = {"fields": "citationCount"}
     for attempt in range(retries):
@@ -153,7 +153,7 @@ def _semantic_scholar_get_paper(paper_key, retries=3, timeout=30):
         if resp is not None and resp.status_code == 200:
             return resp
         if attempt < retries - 1:
-            time.sleep(1.0 * (attempt + 1))
+            time.sleep(0.4 * (attempt + 1))
     return None
 
 
@@ -234,27 +234,35 @@ def enrich_arxiv_subjects(papers, batch_size=40):
             p["subjects"] = subject_map.get(aid, p.get("subjects", []))
 
 
-def enrich_citations(papers, delay=0.15):
-    cache = {}
+def enrich_citations(papers, citation_cache=None, delay=0.02):
+    cache = citation_cache if citation_cache is not None else {}
+    to_query = []
+    seen = set()
     for p in papers:
         aid = _normalize_arxiv_id(p.get("arxiv_id"))
-        if not aid:
-            p["citations"] = int(p.get("citations", 0) or 0)
-            continue
-        if aid in cache:
-            p["citations"] = cache[aid]
-            continue
+        if aid and aid not in cache and aid not in seen:
+            seen.add(aid)
+            to_query.append(aid)
+
+    for aid in to_query:
         resp = _semantic_scholar_get_paper(f"ARXIV:{aid}")
         if resp is not None:
             try:
-                c = int(resp.json().get("citationCount", 0) or 0)
+                cache[aid] = int(resp.json().get("citationCount", 0) or 0)
             except Exception:
-                c = int(p.get("citations", 0) or 0)
+                cache[aid] = 0
         else:
-            c = int(p.get("citations", 0) or 0)
-        cache[aid] = c
-        p["citations"] = c
-        time.sleep(delay)
+            cache[aid] = 0
+        if delay > 0:
+            time.sleep(delay)
+
+    for p in papers:
+        aid = _normalize_arxiv_id(p.get("arxiv_id"))
+        if aid:
+            p["citations"] = int(cache.get(aid, p.get("citations", 0) or 0))
+        else:
+            p["citations"] = int(p.get("citations", 0) or 0)
+    return cache
 
 
 def fetch_latest_papers(max_results=50):
@@ -559,7 +567,7 @@ def build_authors(high_citation, latest):
         result.append((name, combined, non_cbf))
 
         if i < len(sorted_authors) - 1:
-            time.sleep(0.5)
+            time.sleep(0.15)
 
     return result
 
@@ -935,24 +943,31 @@ if __name__ == "__main__":
     print("Enriching arXiv subject categories...")
     enrich_arxiv_subjects(latest)
     enrich_arxiv_subjects(high_citation)
-    print("Enriching citation counts...")
-    enrich_citations(latest)
-    enrich_citations(high_citation)
 
     print("Building author data...")
     authors = build_authors(high_citation, latest)
     print(f"Built {len(authors)} authors")
-    author_papers = []
-    for _, cbf_ps, other_ps in authors:
-        author_papers.extend(cbf_ps)
-        author_papers.extend(other_ps)
-    enrich_citations(author_papers)
-
     print("Fetching conference papers...")
     conference_papers = fetch_conference_papers()
-    enrich_citations(conference_papers)
     conferences = build_conference_groups(conference_papers)
     print(f"Built {len(conferences)} conference groups")
+
+    print("Enriching citation counts (deduplicated across all sections)...")
+    all_papers = []
+    all_papers.extend(latest)
+    all_papers.extend(high_citation)
+    for _, cbf_ps, other_ps in authors:
+        all_papers.extend(cbf_ps)
+        all_papers.extend(other_ps)
+    for item in conferences:
+        if len(item) == 3:
+            _, cbf_ps, other_ps = item
+            all_papers.extend(cbf_ps)
+            all_papers.extend(other_ps)
+        elif len(item) == 2:
+            _, ps = item
+            all_papers.extend(ps)
+    enrich_citations(all_papers)
 
     os.makedirs("docs", exist_ok=True)
     open("docs/.nojekyll", "w").close()
