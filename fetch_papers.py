@@ -1,7 +1,9 @@
 import json
 import os
+import re
 import time
 from html import escape
+from collections import Counter
 from collections import defaultdict
 from datetime import datetime, timezone
 from xml.etree import ElementTree as ET
@@ -24,6 +26,15 @@ TOPIC_RULES = [
     ("theory", "Theory", ("lyapunov", "stability", "invariance", "robustness", "certificate", "proof")),
 ]
 
+KEYWORD_STOPWORDS = {
+    "about", "after", "again", "against", "algorithm", "algorithms", "also", "analysis", "approach",
+    "approaches", "article", "based", "between", "class", "classes", "control", "design", "different",
+    "during", "effect", "effects", "framework", "from", "function", "functions", "given", "have",
+    "high", "into", "method", "methods", "model", "models", "more", "nonlinear", "paper", "papers",
+    "problem", "problems", "proposed", "results", "safety", "scheme", "study", "systems", "their",
+    "these", "this", "through", "using", "with", "within",
+}
+
 
 def infer_topic(title="", abstract=""):
     text = f"{title} {abstract}".lower()
@@ -31,6 +42,43 @@ def infer_topic(title="", abstract=""):
         if any(word in text for word in keywords):
             return key, label
     return "other", "Other"
+
+
+def extract_keywords_from_paper(paper, per_paper_limit=8):
+    text = f"{paper.get('title', '')} {paper.get('abstract', '')}".lower()
+    tokens = re.findall(r"[a-z][a-z0-9-]{2,}", text)
+    tokens = [
+        t for t in tokens
+        if t not in KEYWORD_STOPWORDS
+        and "cbf" not in t
+        and "barrier" not in t
+        and "control" not in t
+        and len(t) > 2
+    ]
+    return [kw for kw, _ in Counter(tokens).most_common(per_paper_limit)]
+
+
+def build_keyword_stats(high_citation, latest, top_n=24):
+    merged = []
+    seen = set()
+    for p in latest + high_citation:
+        key = p.get("paper_id") or p.get("arxiv_id") or p.get("title")
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        merged.append(p)
+
+    stats = defaultdict(lambda: {"count": 0, "samples": []})
+    for p in merged:
+        kws = extract_keywords_from_paper(p)
+        title = p.get("title", "")
+        for kw in set(kws):
+            stats[kw]["count"] += 1
+            if len(stats[kw]["samples"]) < 3 and title:
+                stats[kw]["samples"].append(title)
+
+    sorted_stats = sorted(stats.items(), key=lambda x: (-x[1]["count"], x[0]))[:top_n]
+    return sorted_stats, len(merged)
 
 
 def _load_previous_high_citation(path="docs/papers_data.json"):
@@ -285,6 +333,7 @@ def generate_html(high_citation, latest, authors):
     updated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     hc_cards = "\n".join(paper_card(p, show_citations=True, show_date=True) for p in high_citation)
     lt_cards = "\n".join(paper_card(p, show_citations=False, show_date=True) for p in latest)
+    keyword_stats, keyword_total_papers = build_keyword_stats(high_citation, latest)
 
     author_list_html = "\n".join(
         f'<li class="author-item" onclick="showAuthor({i})">'
@@ -303,6 +352,15 @@ def generate_html(high_citation, latest, authors):
             f'<div class="section-divider">CBF Related Papers</div>{cbf_section}{other_block}</div>\n'
         )
 
+    keyword_cards_html = "\n".join(
+        f"""    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">{escape(kw)}</span><span class="keyword-count">{meta["count"]} papers</span></div>
+      <p class="keyword-share">{(meta["count"] / keyword_total_papers * 100):.1f}% coverage</p>
+      <p class="keyword-samples">{escape(" | ".join(meta["samples"]))}</p>
+    </div>"""
+        for kw, meta in keyword_stats
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -311,6 +369,7 @@ def generate_html(high_citation, latest, authors):
 <title>CBF Papers Tracker</title>
 <style>
   *{{box-sizing:border-box;margin:0;padding:0}}
+  :root{{--content-width:min(85vw,1500px)}}
   body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f7fa;color:#333}}
   header{{background:linear-gradient(135deg,#1a1a2e,#16213e);color:white;padding:2rem;text-align:center}}
   header h1{{font-size:2rem;margin-bottom:.5rem}}
@@ -318,7 +377,7 @@ def generate_html(high_citation, latest, authors):
   .tabs{{display:flex;justify-content:center;gap:1rem;padding:1.5rem;background:white;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:10}}
   .tab{{padding:.6rem 1.5rem;border-radius:2rem;cursor:pointer;border:2px solid #1a1a2e;background:white;font-weight:600;transition:all .2s}}
   .tab.active,.tab:hover{{background:#1a1a2e;color:white}}
-  .section{{display:none;max-width:900px;margin:2rem auto;padding:0 1rem}}
+  .section{{display:none;width:var(--content-width);margin:2rem auto;padding:0}}
   .section.active{{display:block}}
   .card{{background:white;border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1rem;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:box-shadow .2s}}
   .card:hover{{box-shadow:0 4px 16px rgba(0,0,0,.12)}}
@@ -332,8 +391,12 @@ def generate_html(high_citation, latest, authors):
   .authors{{font-size:.85rem;color:#666;margin-bottom:.5rem}}
   .abstract{{font-size:.85rem;color:#555;line-height:1.6;border-top:1px solid #f0f0f0;padding-top:.5rem;margin-top:.5rem}}
   footer{{text-align:center;padding:2rem;color:#999;font-size:.85rem}}
-  .author-layout{{display:flex;max-width:900px;margin:2rem auto;padding:0 1rem;gap:1.5rem}}
+  .author-layout{{display:flex;width:100%;margin:0;gap:1.5rem}}
   .author-list{{width:220px;flex-shrink:0;background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);align-self:flex-start;position:sticky;top:80px;max-height:80vh;overflow-y:auto}}
+  .author-list{{scrollbar-width:thin;scrollbar-color:#b7bfce #f1f3f7}}
+  .author-list::-webkit-scrollbar{{width:10px}}
+  .author-list::-webkit-scrollbar-track{{background:#f1f3f7;border-radius:999px}}
+  .author-list::-webkit-scrollbar-thumb{{background:#b7bfce;border-radius:999px;border:2px solid #f1f3f7}}
   .author-list ul{{list-style:none}}
   .author-item{{display:flex;justify-content:space-between;align-items:center;padding:.7rem 1rem;cursor:pointer;border-bottom:1px solid #f0f0f0;transition:background .15s}}
   .author-item:hover,.author-item.active{{background:#e8eaf6}}
@@ -343,16 +406,24 @@ def generate_html(high_citation, latest, authors):
   .author-panel{{display:none}}
   .author-panel.active{{display:block}}
   .section-divider{{font-size:.8rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;padding:.5rem 0;margin-bottom:.5rem;border-bottom:2px solid #e0e0e0}}
-  .controls{{max-width:900px;margin:1.2rem auto 0;padding:0 1rem;display:flex;flex-direction:column;gap:.8rem}}
+  .controls{{width:var(--content-width);margin:1.2rem auto 0;padding:0;display:flex;flex-direction:column;gap:.8rem}}
   .search-input{{width:100%;padding:.75rem .95rem;border:1px solid #ccd4df;border-radius:10px;font-size:.95rem;outline:none;background:white}}
   .search-input:focus{{border-color:#1a1a2e;box-shadow:0 0 0 3px rgba(26,26,46,.1)}}
   .topics{{display:flex;flex-wrap:wrap;gap:.5rem}}
   .topic-chip{{padding:.35rem .8rem;border:1px solid #c8d0df;background:white;color:#263044;border-radius:999px;cursor:pointer;font-size:.82rem;font-weight:600}}
   .topic-chip.active,.topic-chip:hover{{background:#1a1a2e;color:white;border-color:#1a1a2e}}
-  .filter-empty{{display:none;max-width:900px;margin:1rem auto 0;padding:0 1rem;color:#666;font-size:.9rem}}
+  .filter-empty{{display:none;width:var(--content-width);margin:1rem auto 0;padding:0;color:#666;font-size:.9rem}}
+  .keywords-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}}
+  .keyword-card{{background:white;border-radius:12px;padding:1rem 1.1rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}}
+  .keyword-header{{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.4rem}}
+  .keyword-name{{font-weight:700;color:#1a1a2e}}
+  .keyword-count{{font-size:.8rem;background:#e8eaf6;color:#283593;border-radius:999px;padding:.15rem .55rem}}
+  .keyword-share{{font-size:.82rem;color:#666;margin-bottom:.45rem}}
+  .keyword-samples{{font-size:.82rem;color:#4a5568;line-height:1.45}}
   @media (max-width: 860px) {{
     .author-layout{{flex-direction:column}}
     .author-list{{position:static;width:100%;max-height:none}}
+    .section,.controls,.filter-empty{{width:92vw}}
   }}
 </style>
 </head>
@@ -365,6 +436,7 @@ def generate_html(high_citation, latest, authors):
   <button class="tab active" onclick="show('high',this)">High Citation (>=100)</button>
   <button class="tab" onclick="show('latest',this)">Latest Papers</button>
   <button class="tab" onclick="show('authors',this)">Top Authors</button>
+  <button class="tab" onclick="show('keywords',this)">Key Words</button>
 </div>
 <div class="controls">
   <input id="searchInput" class="search-input" type="text" placeholder="Search title / authors / abstract" oninput="applyFilters()" />
@@ -381,11 +453,14 @@ def generate_html(high_citation, latest, authors):
 <p id="filterEmpty" class="filter-empty">No papers match current filters.</p>
 <div id="high" class="section active">{hc_cards}</div>
 <div id="latest" class="section">{lt_cards}</div>
-<div id="authors" class="section" style="max-width:900px">
+<div id="authors" class="section">
   <div class="author-layout">
     <div class="author-list"><ul>{author_list_html}</ul></div>
     <div class="author-panels">{author_panels_html}</div>
   </div>
+</div>
+<div id="keywords" class="section">
+  <div class="keywords-grid">{keyword_cards_html}</div>
 </div>
 <footer>Auto-updated by GitHub Actions | <a href="https://github.com/QianYuan1437/ArxivCBF">Source</a></footer>
 <script>
@@ -397,6 +472,11 @@ def generate_html(high_citation, latest, authors):
     if (!current) return;
 
     const cards = current.querySelectorAll('.card');
+    const empty = document.getElementById('filterEmpty');
+    if (!cards.length) {{
+      if (empty) empty.style.display = 'none';
+      return;
+    }}
     let visible = 0;
     cards.forEach(card => {{
       const text = (card.dataset.search || '').toLowerCase();
@@ -408,7 +488,6 @@ def generate_html(high_citation, latest, authors):
       if (show) visible += 1;
     }});
 
-    const empty = document.getElementById('filterEmpty');
     if (empty) empty.style.display = visible ? 'none' : 'block';
   }}
 

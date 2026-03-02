@@ -6,6 +6,7 @@
 <title>CBF Papers Tracker</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
+  :root{--content-width:min(85vw,1500px)}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f7fa;color:#333}
   header{background:linear-gradient(135deg,#1a1a2e,#16213e);color:white;padding:2rem;text-align:center}
   header h1{font-size:2rem;margin-bottom:.5rem}
@@ -13,7 +14,7 @@
   .tabs{display:flex;justify-content:center;gap:1rem;padding:1.5rem;background:white;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:10}
   .tab{padding:.6rem 1.5rem;border-radius:2rem;cursor:pointer;border:2px solid #1a1a2e;background:white;font-weight:600;transition:all .2s}
   .tab.active,.tab:hover{background:#1a1a2e;color:white}
-  .section{display:none;max-width:900px;margin:2rem auto;padding:0 1rem}
+  .section{display:none;width:var(--content-width);margin:2rem auto;padding:0}
   .section.active{display:block}
   .card{background:white;border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1rem;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:box-shadow .2s}
   .card:hover{box-shadow:0 4px 16px rgba(0,0,0,.12)}
@@ -27,8 +28,12 @@
   .authors{font-size:.85rem;color:#666;margin-bottom:.5rem}
   .abstract{font-size:.85rem;color:#555;line-height:1.6;border-top:1px solid #f0f0f0;padding-top:.5rem;margin-top:.5rem}
   footer{text-align:center;padding:2rem;color:#999;font-size:.85rem}
-  .author-layout{display:flex;max-width:900px;margin:2rem auto;padding:0 1rem;gap:1.5rem}
+  .author-layout{display:flex;width:100%;margin:0;gap:1.5rem}
   .author-list{width:220px;flex-shrink:0;background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);align-self:flex-start;position:sticky;top:80px;max-height:80vh;overflow-y:auto}
+  .author-list{scrollbar-width:thin;scrollbar-color:#b7bfce #f1f3f7}
+  .author-list::-webkit-scrollbar{width:10px}
+  .author-list::-webkit-scrollbar-track{background:#f1f3f7;border-radius:999px}
+  .author-list::-webkit-scrollbar-thumb{background:#b7bfce;border-radius:999px;border:2px solid #f1f3f7}
   .author-list ul{list-style:none}
   .author-item{display:flex;justify-content:space-between;align-items:center;padding:.7rem 1rem;cursor:pointer;border-bottom:1px solid #f0f0f0;transition:background .15s}
   .author-item:hover,.author-item.active{background:#e8eaf6}
@@ -38,28 +43,37 @@
   .author-panel{display:none}
   .author-panel.active{display:block}
   .section-divider{font-size:.8rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;padding:.5rem 0;margin-bottom:.5rem;border-bottom:2px solid #e0e0e0}
-  .controls{max-width:900px;margin:1.2rem auto 0;padding:0 1rem;display:flex;flex-direction:column;gap:.8rem}
+  .controls{width:var(--content-width);margin:1.2rem auto 0;padding:0;display:flex;flex-direction:column;gap:.8rem}
   .search-input{width:100%;padding:.75rem .95rem;border:1px solid #ccd4df;border-radius:10px;font-size:.95rem;outline:none;background:white}
   .search-input:focus{border-color:#1a1a2e;box-shadow:0 0 0 3px rgba(26,26,46,.1)}
   .topics{display:flex;flex-wrap:wrap;gap:.5rem}
   .topic-chip{padding:.35rem .8rem;border:1px solid #c8d0df;background:white;color:#263044;border-radius:999px;cursor:pointer;font-size:.82rem;font-weight:600}
   .topic-chip.active,.topic-chip:hover{background:#1a1a2e;color:white;border-color:#1a1a2e}
-  .filter-empty{display:none;max-width:900px;margin:1rem auto 0;padding:0 1rem;color:#666;font-size:.9rem}
+  .filter-empty{display:none;width:var(--content-width);margin:1rem auto 0;padding:0;color:#666;font-size:.9rem}
+  .keywords-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+  .keyword-card{background:white;border-radius:12px;padding:1rem 1.1rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .keyword-header{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.4rem}
+  .keyword-name{font-weight:700;color:#1a1a2e}
+  .keyword-count{font-size:.8rem;background:#e8eaf6;color:#283593;border-radius:999px;padding:.15rem .55rem}
+  .keyword-share{font-size:.82rem;color:#666;margin-bottom:.45rem}
+  .keyword-samples{font-size:.82rem;color:#4a5568;line-height:1.45}
   @media (max-width: 860px) {
     .author-layout{flex-direction:column}
     .author-list{position:static;width:100%;max-height:none}
+    .section,.controls,.filter-empty{width:92vw}
   }
 </style>
 </head>
 <body>
 <header>
   <h1>CBF Papers Tracker</h1>
-  <p>Control Barrier Function papers | Updated: 2026-03-02 11:12 UTC</p>
+  <p>Control Barrier Function papers | Updated: 2026-03-02 11:20 UTC</p>
 </header>
 <div class="tabs">
   <button class="tab active" onclick="show('high',this)">High Citation (>=100)</button>
   <button class="tab" onclick="show('latest',this)">Latest Papers</button>
   <button class="tab" onclick="show('authors',this)">Top Authors</button>
+  <button class="tab" onclick="show('keywords',this)">Key Words</button>
 </div>
 <div class="controls">
   <input id="searchInput" class="search-input" type="text" placeholder="Search title / authors / abstract" oninput="applyFilters()" />
@@ -628,7 +642,7 @@ Our novel controller synthesis algorithm, RL-CBF, guarantees safety with high pr
       <p class="authors">Adrian Wiltz, Dimos V. Dimarogonas</p>
       <p class="abstract">This article presents a systematic method for designing time-varying Control Barrier Functions (CBF) composed of a time-invariant component and multiple time-dependent components, leveraging structural properties of the system dynamics. The method involves the construction of a specific class of time-invariant CBFs that encode the system's dynamic capabilities with respect to a given constraint, and augments them subsequently with appropriately designed time-dependent transformations. While transformations uniformly varying the time-invariant CBF can be applied to arbitrary systems, transformations exploiting structural properties in the dynamics - equivariances in particular - enable the handling of a broader and more expressive class of time-varying constraints. The article shows how to leverage such properties in the design of time-varying CBFs. The proposed method decouples the design of time variations from the computationally expensive construction of the underlying CBFs, thereby providing a computationally attractive method to the design of time-varying CBFs. The method accounts for input constraints and under-actuation, and requires only qualitative knowledge on the time-variation of the constraints making it suitable to the application in uncertain environments.</p>
     </div></div>
-<div id="authors" class="section" style="max-width:900px">
+<div id="authors" class="section">
   <div class="author-layout">
     <div class="author-list"><ul><li class="author-item" onclick="showAuthor(0)"><span class="author-name">A. Ames</span><span class="author-count">19</span></li>
 <li class="author-item" onclick="showAuthor(1)"><span class="author-name">K. Sreenath</span><span class="author-count">15</span></li>
@@ -4450,6 +4464,128 @@ Level of Evidence
 </div>
   </div>
 </div>
+<div id="keywords" class="section">
+  <div class="keywords-grid">    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">the</span><span class="keyword-count">81 papers</span></div>
+      <p class="keyword-share">88.0% coverage</p>
+      <p class="keyword-samples">SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision | Refining Almost-Safe Value Functions on the Fly | Provably Safe Generative Sampling with Constricting Barrier Functions</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">and</span><span class="keyword-count">73 papers</span></div>
+      <p class="keyword-share">79.3% coverage</p>
+      <p class="keyword-samples">SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision | Refining Almost-Safe Value Functions on the Fly | Provably Safe Generative Sampling with Constricting Barrier Functions</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">for</span><span class="keyword-count">48 papers</span></div>
+      <p class="keyword-share">52.2% coverage</p>
+      <p class="keyword-samples">SAGE-LLM: Towards Safe and Generalizable LLM Controller with Fuzzy-CBF Verification and Graph-Structured Knowledge Retrieval for UAV Decision | Refining Almost-Safe Value Functions on the Fly | Contextual Safety Reasoning and Grounding for Open-World Robots</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">that</span><span class="keyword-count">34 papers</span></div>
+      <p class="keyword-share">37.0% coverage</p>
+      <p class="keyword-samples">Provably Safe Generative Sampling with Constricting Barrier Functions | BarrierSteer: LLM Safety via Learning Barrier Steering | Contextual Safety Reasoning and Grounding for Open-World Robots</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">constraints</span><span class="keyword-count">14 papers</span></div>
+      <p class="keyword-share">15.2% coverage</p>
+      <p class="keyword-samples">Safe Feedback Optimization through Control Barrier Functions | TTCBF: A Truncated Taylor Control Barrier Function for High-Order Safety Constraints | From Vertices to Convex Hulls: Certifying Set-Wise Compatibility for CBF Constraints</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">safe</span><span class="keyword-count">14 papers</span></div>
+      <p class="keyword-share">15.2% coverage</p>
+      <p class="keyword-samples">Provably Safe Generative Sampling with Constricting Barrier Functions | Safe Adaptive Control of Parabolic PDE-ODE Cascades | Safe Stochastic Explorer: Enabling Safe Goal Driven Exploration in Stochastic Environments and Safe Interaction with Unknown Objects</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">learning</span><span class="keyword-count">10 papers</span></div>
+      <p class="keyword-share">10.9% coverage</p>
+      <p class="keyword-samples">Meta-Reinforcement Learning for Robust and Non-greedy Control Barrier Functions in Spacecraft Proximity Operations | Learning Safety-Guaranteed, Non-Greedy Control Barrier Functions Using Reinforcement Learning | Self-Organizing Dual-Buffer Adaptive Clustering Experience Replay (SODASER) for Safe Reinforcement Learning in Optimal Control</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">system</span><span class="keyword-count">9 papers</span></div>
+      <p class="keyword-share">9.8% coverage</p>
+      <p class="keyword-samples">Towards X-embodiment safety: A control theory perspective on transferring safety certificates across dynamical systems | Data-Driven Safe Output Regulation of Strict-Feedback Linear Systems with Input Delay | High Order Control Lyapunov Function - Control Barrier Function - Quadratic Programming Based Autonomous Driving Controller for Bicyclist Safety</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">adaptive</span><span class="keyword-count">8 papers</span></div>
+      <p class="keyword-share">8.7% coverage</p>
+      <p class="keyword-samples">Safe Adaptive Control of Parabolic PDE-ODE Cascades | Composite Adaptive Control Barrier Functions for Safety-Critical Systems with Parametric Uncertainty | TTCBF: A Truncated Taylor Control Barrier Function for High-Order Safety Constraints</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">are</span><span class="keyword-count">7 papers</span></div>
+      <p class="keyword-share">7.6% coverage</p>
+      <p class="keyword-samples">Learning Safety-Guaranteed, Non-Greedy Control Barrier Functions Using Reinforcement Learning | BarrierNet: Differentiable Control Barrier Functions for Learning of Safe Robot Control | Safety-Critical Containment Maneuvering of Underactuated Autonomous Surface Vehicles Based on Neurodynamic Optimization With Control Barrier Functions</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">safety-critical</span><span class="keyword-count">6 papers</span></div>
+      <p class="keyword-share">6.5% coverage</p>
+      <p class="keyword-samples">Robust Taylor-Lagrange Control for Safety-Critical Systems | Safety-Critical Containment Maneuvering of Underactuated Autonomous Surface Vehicles Based on Neurodynamic Optimization With Control Barrier Functions | Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Function</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">uncertainty</span><span class="keyword-count">6 papers</span></div>
+      <p class="keyword-share">6.5% coverage</p>
+      <p class="keyword-samples">Composite Adaptive Control Barrier Functions for Safety-Critical Systems with Parametric Uncertainty | Stochastic Control Barrier Functions under State Estimation: From Euclidean Space to Lie Groups | Guaranteeing Safety of Learned Perception Modules via Measurement-Robust Control Barrier Functions</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">agents</span><span class="keyword-count">5 papers</span></div>
+      <p class="keyword-share">5.4% coverage</p>
+      <p class="keyword-samples">Cooperative Transportation Without Prior Object Knowledge via Adaptive Self-Allocation and Coordination | Allocating Corrective Control to Mitigate Multi-agent Safety Violations Under Private Preferences | Safe Navigation under Uncertain Obstacle Dynamics using Control Barrier Functions and Constrained Convex Generators</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">dynamics</span><span class="keyword-count">5 papers</span></div>
+      <p class="keyword-share">5.4% coverage</p>
+      <p class="keyword-samples">Towards X-embodiment safety: A control theory perspective on transferring safety certificates across dynamical systems | Convex Model Predictive Control for Safe Output Consensus of Nonlinear Multi-Agent Systems | Safe Navigation under Uncertain Obstacle Dynamics using Control Barrier Functions and Constrained Convex Generators</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">our</span><span class="keyword-count">5 papers</span></div>
+      <p class="keyword-share">5.4% coverage</p>
+      <p class="keyword-samples">Refining Almost-Safe Value Functions on the Fly | VLSA: Vision-Language-Action Models with Plug-and-Play Safety Constraint Layer | Learning Safe Multi-Agent Control with Decentralized Neural Barrier Certificates</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">robot</span><span class="keyword-count">5 papers</span></div>
+      <p class="keyword-share">5.4% coverage</p>
+      <p class="keyword-samples">SQ-CBF: Signed Distance Functions for Numerically Stable Superquadric-Based Safety Filtering | Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control | BarrierNet: Differentiable Control Barrier Functions for Learning of Safe Robot Control</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">robust</span><span class="keyword-count">5 papers</span></div>
+      <p class="keyword-share">5.4% coverage</p>
+      <p class="keyword-samples">Robust Taylor-Lagrange Control for Safety-Critical Systems | Robust Safety-Critical Control of Networked SIR Dynamics | Robust Adaptive Control Barrier Functions: An Adaptive and Data-Driven Approach to Safety</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">application</span><span class="keyword-count">4 papers</span></div>
+      <p class="keyword-share">4.3% coverage</p>
+      <p class="keyword-samples">Control Barrier Functions for Mechanical Systems: Theory and Application to Robotic Grasping | Discrete Control Barrier Functions for Safety-Critical Control of Discrete Systems with Application to Bipedal Robot Navigation | Control barrier function based quadratic programs with application to bipedal robotic walking</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">can</span><span class="keyword-count">4 papers</span></div>
+      <p class="keyword-share">4.3% coverage</p>
+      <p class="keyword-samples">From Ellipsoids to Midair Control of Dynamic Hitches | Banach Control Barrier Functions for Large-Scale Swarm Control | High-Order Control Barrier Functions</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">dynamic</span><span class="keyword-count">4 papers</span></div>
+      <p class="keyword-share">4.3% coverage</p>
+      <p class="keyword-samples">From Ellipsoids to Midair Control of Dynamic Hitches | UEREBot: Learning Safe Quadrupedal Locomotion under Unstructured Environments and High-Speed Dynamic Obstacles | Multi-Layered Safety for Legged Robots via Control Barrier Functions and Model Predictive Control</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">multi-agent</span><span class="keyword-count">4 papers</span></div>
+      <p class="keyword-share">4.3% coverage</p>
+      <p class="keyword-samples">Allocating Corrective Control to Mitigate Multi-agent Safety Violations Under Private Preferences | Collision-Aware Density-Driven Control of Multi-Agent Systems via Control Barrier Functions | Learning Safe Multi-Agent Control with Decentralized Neural Barrier Certificates</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">navigation</span><span class="keyword-count">4 papers</span></div>
+      <p class="keyword-share">4.3% coverage</p>
+      <p class="keyword-samples">Control Barrier Functions with Audio Risk Awareness for Robot Safe Navigation on Construction Sites | Proactive Local-Minima-Free Robot Navigation: Blending Motion Prediction with Safe Control | Safe Navigation under Uncertain Obstacle Dynamics using Control Barrier Functions and Constrained Convex Generators</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">performance</span><span class="keyword-count">4 papers</span></div>
+      <p class="keyword-share">4.3% coverage</p>
+      <p class="keyword-samples">BarrierSteer: LLM Safety via Learning Barrier Steering | Control Barrier Functions and Input-to-State Safety With Application to Automated Vehicles | Safety-Critical Model Predictive Control with Discrete-Time Control Barrier Function</p>
+    </div>
+    <div class="keyword-card">
+      <div class="keyword-header"><span class="keyword-name">quadratic</span><span class="keyword-count">4 papers</span></div>
+      <p class="keyword-share">4.3% coverage</p>
+      <p class="keyword-samples">Adaptive Control Barrier Functions | Control Barrier Function-Based Quadratic Programs Introduce Undesirable Asymptotically Stable Equilibria | Control barrier function based quadratic programs with application to bipedal robotic walking</p>
+    </div></div>
+</div>
 <footer>Auto-updated by GitHub Actions | <a href="https://github.com/QianYuan1437/ArxivCBF">Source</a></footer>
 <script>
   let activeTopic = 'all';
@@ -4460,6 +4596,11 @@ Level of Evidence
     if (!current) return;
 
     const cards = current.querySelectorAll('.card');
+    const empty = document.getElementById('filterEmpty');
+    if (!cards.length) {
+      if (empty) empty.style.display = 'none';
+      return;
+    }
     let visible = 0;
     cards.forEach(card => {
       const text = (card.dataset.search || '').toLowerCase();
@@ -4471,7 +4612,6 @@ Level of Evidence
       if (show) visible += 1;
     });
 
-    const empty = document.getElementById('filterEmpty');
     if (empty) empty.style.display = visible ? 'none' : 'block';
   }
 
