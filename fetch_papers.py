@@ -676,6 +676,9 @@ def generate_html(high_citation, latest, authors, conferences=None):
   header{{background:linear-gradient(135deg,#1a1a2e,#16213e);color:white;padding:2rem;text-align:center}}
   header h1{{font-size:2rem;margin-bottom:.5rem}}
   header p{{opacity:.8;font-size:.9rem}}
+  .project-nav{{width:var(--content-width);margin:1rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.65rem}}
+  .nav-btn{{display:flex;justify-content:center;align-items:center;padding:.72rem .9rem;border-radius:12px;text-decoration:none;font-size:.88rem;font-weight:600;background:white;border:1px solid #d8deea;color:#1a1a2e;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:all .18s}}
+  .nav-btn:hover{{transform:translateY(-1px);border-color:#1a1a2e;box-shadow:0 6px 16px rgba(0,0,0,.1)}}
   .tabs{{display:flex;justify-content:center;gap:1rem;padding:1.5rem;background:white;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:10}}
   .tab{{padding:.6rem 1.5rem;border-radius:2rem;cursor:pointer;border:2px solid #1a1a2e;background:white;font-weight:600;transition:all .2s}}
   .tab.active,.tab:hover{{background:#1a1a2e;color:white}}
@@ -740,6 +743,7 @@ def generate_html(high_citation, latest, authors, conferences=None):
   @media (max-width: 860px) {{
     .author-layout,.keyword-layout,.conference-layout{{flex-direction:column}}
     .author-list,.keyword-list,.conference-list{{position:static;width:100%;max-height:none}}
+    .project-nav{{width:92vw}}
     .search-row{{flex-direction:column;align-items:stretch}}
     .search-input{{max-width:none}}
     .sort-wrap{{min-width:0;width:100%}}
@@ -752,6 +756,14 @@ def generate_html(high_citation, latest, authors, conferences=None):
   <h1>CBF Papers Tracker</h1>
   <p>Control Barrier Function papers | Updated: {updated}</p>
 </header>
+<div class="project-nav">
+  <a class="nav-btn" href="https://github.com/QianYuan1437/ArxivCBF" target="_blank">GitHub Repository</a>
+  <a class="nav-btn" href="https://github.com/QianYuan1437/ArxivCBF/actions/workflows/update.yml" target="_blank">Update Workflow</a>
+  <a class="nav-btn" href="https://github.com/QianYuan1437/ArxivCBF/blob/main/README.md" target="_blank">Project README</a>
+  <a class="nav-btn" href="https://github.com/QianYuan1437/ArxivCBF/issues" target="_blank">Issues</a>
+  <a class="nav-btn" href="papers_data.json" target="_blank">Papers Data JSON</a>
+  <a class="nav-btn" href="https://github.com/QianYuan1437?tab=repositories" target="_blank">More Repositories</a>
+</div>
 <div class="tabs">
   <button class="tab active" onclick="show('high',this)">High Citation (>=100)</button>
   <button class="tab" onclick="show('latest',this)">Latest Papers</button>
