@@ -761,7 +761,6 @@ def generate_html(high_citation, latest, authors, conferences=None):
   <a class="nav-btn" href="https://github.com/QianYuan1437/ArxivCBF/actions/workflows/update.yml" target="_blank">Update Workflow</a>
   <a class="nav-btn" href="https://github.com/QianYuan1437/ArxivCBF/blob/main/README.md" target="_blank">Project README</a>
   <a class="nav-btn" href="https://github.com/QianYuan1437/ArxivCBF/issues" target="_blank">Issues</a>
-  <a class="nav-btn" href="papers_data.json" target="_blank">Papers Data JSON</a>
   <a class="nav-btn" href="https://github.com/QianYuan1437?tab=repositories" target="_blank">More Repositories</a>
 </div>
 <div class="tabs">
