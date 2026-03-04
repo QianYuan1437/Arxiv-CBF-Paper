@@ -676,7 +676,7 @@ def generate_html(high_citation, latest, authors, conferences=None):
   header{{background:linear-gradient(135deg,#1a1a2e,#16213e);color:white;padding:2rem;text-align:center}}
   header h1{{font-size:2rem;margin-bottom:.5rem}}
   header p{{opacity:.8;font-size:.9rem}}
-  .project-nav{{width:var(--content-width);margin:1rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.65rem}}
+  .project-nav{{width:var(--content-width);margin:1rem auto 1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.65rem}}
   .nav-btn{{display:flex;justify-content:center;align-items:center;padding:.72rem .9rem;border-radius:12px;text-decoration:none;font-size:.88rem;font-weight:600;background:white;border:1px solid #d8deea;color:#1a1a2e;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:all .18s}}
   .nav-btn:hover{{transform:translateY(-1px);border-color:#1a1a2e;box-shadow:0 6px 16px rgba(0,0,0,.1)}}
   .tabs{{display:flex;justify-content:center;gap:1rem;padding:1.5rem;background:white;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:10}}
