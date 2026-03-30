@@ -292,7 +292,11 @@ def fetch_latest_papers(max_results=50):
         "atom": "http://www.w3.org/2005/Atom",
         "arxiv": "http://arxiv.org/schemas/atom",
     }
-    root = ET.fromstring(resp.content)
+    try:
+        root = ET.fromstring(resp.content)
+    except ET.ParseError as e:
+        print(f"XML parse error in fetch_latest_papers: {e}")
+        return []
 
     papers = []
     for entry in root.findall("atom:entry", ns):
@@ -382,7 +386,11 @@ def fetch_conference_papers(max_results=350, per_group_extra=45):
                 print(f"Failed to fetch conference papers: {e}")
                 return []
             time.sleep(3)
-    root = ET.fromstring(resp.content)
+    try:
+        root = ET.fromstring(resp.content)
+    except ET.ParseError as e:
+        print(f"XML parse error in fetch_conference_papers: {e}")
+        return []
 
     papers = []
     seen = set()
