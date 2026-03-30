@@ -273,8 +273,20 @@ def fetch_latest_papers(max_results=50):
         "sortBy": "submittedDate",
         "sortOrder": "descending",
     }
-    resp = requests.get(ARXIV_API, params=params, timeout=30)
-    resp.raise_for_status()
+    
+    for attempt in range(3):
+        try:
+            resp = requests.get(ARXIV_API, params=params, timeout=30)
+            if resp.status_code == 429:
+                time.sleep(5 * (attempt + 1))
+                continue
+            resp.raise_for_status()
+            break
+        except Exception as e:
+            if attempt == 2:
+                print(f"Failed to fetch latest papers after 3 attempts: {e}")
+                return []
+            time.sleep(3)
 
     ns = {
         "atom": "http://www.w3.org/2005/Atom",
@@ -357,8 +369,19 @@ def fetch_conference_papers(max_results=350, per_group_extra=45):
         "sortBy": "submittedDate",
         "sortOrder": "descending",
     }
-    resp = requests.get(ARXIV_API, params=params, timeout=30)
-    resp.raise_for_status()
+    for attempt in range(3):
+        try:
+            resp = requests.get(ARXIV_API, params=params, timeout=30)
+            if resp.status_code == 429:
+                time.sleep(5 * (attempt + 1))
+                continue
+            resp.raise_for_status()
+            break
+        except Exception as e:
+            if attempt == 2:
+                print(f"Failed to fetch conference papers: {e}")
+                return []
+            time.sleep(3)
     root = ET.fromstring(resp.content)
 
     papers = []
